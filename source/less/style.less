@@ -1,0 +1,41 @@
+@import "palette.less";
+@import "mixins.less";
+@pad: 1rem;
+a {
+	color: @palette-Green-A700;
+	&:hover {
+		color: @palette-Green-A400;
+	}
+}
+.nolist() {
+	padding: 0;
+	margin: 0;
+	li {
+		list-style-type: none;
+	}
+}
+.acc-debug {
+	position: fixed;
+	z-index: 999;
+	left: 0;
+	top: 0;
+	background-color: rgba(255, 255, 255, 0.9); 
+	font-size: .75em;
+	padding: @pad/2;
+	overflow: hidden;
+	width: 100%;
+	ul {
+		width: 33%;
+		float: left;
+		.nolist;
+		li {
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+		.title {
+			width: @pad*4;
+			display: inline-block;
+		}
+	}
+}

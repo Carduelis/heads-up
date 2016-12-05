@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Heads-up</title>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.15.0/lodash.js"></script>
+	<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.3.3/backbone.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/backbone.radio/2.0.0/backbone.radio.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/backbone.marionette/3.1.0/backbone.marionette.js"></script>
+	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<script type="text/javascript" src="js/main.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+	<section id="app" class="container">
+	</section>
+	<script id="t-root" type="text/template">
+		<r-navibar></r-navibar>
+		<r-statusbar></r-statusbar>
+		<r-content></r-content>
+	</script>
+	<script id="t-accelerator-debug" type="text/template">
+		<ul>
+			<li><span class="title">x:</span><span class="value"><%-x%></span>
+			<li><span class="title">y:</span><span class="value"><%-y%></span>
+			<li><span class="title">z:</span><span class="value"><%-z%></span>
+		</ul>
+		<ul>
+			<li><span class="title">grav_x:</span><span class="value"><%-gravity.x%></span>
+			<li><span class="title">grav_y:</span><span class="value"><%-gravity.y%></span>
+			<li><span class="title">grav_z:</span><span class="value"><%-gravity.z%></span>
+		</ul>
+		<ul>
+			<li><span class="title">alpha:</span><span class="value"><%-alpha%></span>
+			<li><span class="title">beta:</span><span class="value"><%-beta%></span>
+			<li><span class="title">gamma:</span><span class="value"><%-gamma%></span>
+		</ul>
+	</script>
+	<footer class="container">
+		<p class="small text-muted">Created by Pavel Shchegolev, 2016
+	</footer>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Money Changer</title>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.15.0/lodash.js"></script>
+	<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.3.3/backbone.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/backbone.radio/2.0.0/backbone.radio.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/backbone.marionette/3.0.0/backbone.marionette.js"></script>
+	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<script type="text/javascript" src="js/main.js"></script>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<header class="page-header container">
+		<h1>Money Changer</h1>
+		<p class="lead">Money tracker for groups
+		<!-- <p class="lead">Resolves an inconvenience in case of group ordering food -->
+	</header>
+	<section id="app" class="container">
+		
+	</section>
+	<footer class="container">
+		<p class="small text-muted">Created by Pavel Shchegolev, 2016
+	</footer>
+
+	<script id="t-me" type="text/template">
+		
+	</script>
+
+	<script id="t-root" type="text/template">
+		<div class="row">
+			<div class="users col-sm-3"></div>
+			<div class="orders col-sm-3"></div>
+		</div>
+		<div class="new"></div>
+	</script>
+		<script id="t-user-snippet" type="text/template">
+
+			<div class="avatar"><img src="<%-userPic%>"></div>
+			<h5><%-userName%></h5>
+			<p><b><%-balance%></b><i class="small glyphicon glyphicon-rub"></i>, Заказов: <%-totalOrders%>
+
+		</script>
+</body>
+</html>
