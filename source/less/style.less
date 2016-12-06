@@ -19,10 +19,11 @@ a {
 	z-index: 999;
 	left: 0;
 	top: 0;
-	background-color: rgba(255, 255, 255, 0.9); 
+	// background-color: rgba(255, 255, 255, 0.1); 
 	font-size: .75em;
 	padding: @pad/2;
 	overflow: hidden;
+	color: rgba(255, 255, 255, 0.5);
 	width: 100%;
 	ul {
 		width: 33%;
@@ -36,6 +37,87 @@ a {
 		.title {
 			width: @pad*4;
 			display: inline-block;
+		}
+	}
+}
+
+html, body {
+	background-color: #000;
+	height: 100%;
+	overflow: hidden;
+}
+
+
+#app {
+	height: 100%;
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	> div {
+		// width: 100%;
+	}
+}
+#app-footer {
+	padding: 0 @pad;
+	position: absolute;
+	right: 0;
+	bottom: 0;
+}
+.game-content {
+	text-align: center;
+	padding: @pad;
+	.transition(all 300ms);
+	&.correct {
+		background-color: @palette-Light-Green-200;
+		color: @palette-Green-600;
+		border-radius: @pad;	
+		&.swiped {
+			.translate(0, 100%);
+			opacity: 0;
+		}
+	}
+	&.pass {
+		background-color: @palette-Red-200;
+		color: @palette-Red-600;
+		border-radius: @pad;	
+		&.swiped {
+			.translate(0, -100%);
+			opacity: 0;
+		}
+	}
+	.word-container {
+		padding: 0 @pad;
+		background-color: @palette-Blue-Grey-50;
+		margin: @pad auto;
+		border-radius: @pad/2;
+		height: 8em;
+		line-height: 8em;
+		overflow-y: auto;
+		// overflow-x: hidden;
+		min-width: @pad*20;
+	}
+	h1 {
+		text-align: center;
+		// font-variant: small-caps;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		margin: 0;
+		font-size: 3.4em;
+		line-height: inherit;
+	}
+	.btn {
+		max-width: @pad*20;
+		margin: 0 auto;
+		padding: @pad*2 @pad*5;
+		// background-color: transparent;
+		&.btn-super-danger {
+			border-color: @palette-Red-200;
+			color: @palette-Red-600;
+		}
+		&.btn-super-success {
+			border-color: @palette-Green-200;
+			color: @palette-Green-600;
 		}
 	}
 }

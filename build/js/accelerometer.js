@@ -1,0 +1,2 @@
+
+//# sourceMappingURL=accelerometer.js.map

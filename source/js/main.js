@@ -42,14 +42,17 @@ var App = Marionette.Application.extend({
 	},
 	onStart: function() {
 		console.log(this.getRegion());
-		this.getRegion().show(new RootView({
+		this.rootView = new RootView({
 			model: this.model
-		}));
+		});
+		this.getRegion().show(this.rootView);
 		// this.showView(new RootView()); // are the same
 	},
 });
 app = new App();
-app.on('start', 		(e) => {
+app.on('start', (e) => {
+	Backbone.history.start();
+
 	if (typeof window.DeviceMotionEvent !== 'undefined') {
 		window.ondevicemotion = function(e) {
 			var dataset = _.extend({},e.acceleration);
@@ -60,9 +63,11 @@ app.on('start', 		(e) => {
  			app.model.set(dataset);
 			
 		}
-	} 
+	};
 });
-app.on('before:start', 	(e) => console.log(e));
+app.on('before:start', 	(e) => {
+	
+});
 
 var AcceleratorDebug = Marionette.View.extend({
 	template: '#t-accelerator-debug',
@@ -102,7 +107,7 @@ var RootView = Marionette.View.extend({
 	onRender: function () {
 		this.getRegion('navibar').show(new AcceleratorDebug({
 			model: this.model
-		}))
+		}));
 	}
 });
 

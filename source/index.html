@@ -12,15 +12,28 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<script type="text/javascript" src="js/main.js"></script>
+	<script type="text/javascript" src="js/router.js"></script>
+	<script type="text/javascript" src="js/game.js"></script>
+	<script type="text/javascript" src="js/accelerometer.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
 	<section id="app" class="container">
 	</section>
+	<footer id="app-footer">
+		<p class="small text-muted">Created by Pavel Shchegolev, 2016
+	</footer>
 	<script id="t-root" type="text/template">
 		<r-navibar></r-navibar>
 		<r-statusbar></r-statusbar>
 		<r-content></r-content>
+	</script>
+	<script id="t-main" type="text/template">
+		<button type="button" class="btn btn-super-danger" data-action="pass">Pass <i class="glyphicon glyphicon-remove"></i></button>
+		<div class="word-container">
+			<h1 style="font-size: <%-size%>em"><%-word%></h1>
+		</div>
+		<button type="button" class="btn btn-super-success" data-action="correct">Correct <i class="glyphicon glyphicon-ok"></i></button>
 	</script>
 	<script id="t-accelerator-debug" type="text/template">
 		<ul>
@@ -39,8 +52,5 @@
 			<li><span class="title">gamma:</span><span class="value"><%-gamma%></span>
 		</ul>
 	</script>
-	<footer class="container">
-		<p class="small text-muted">Created by Pavel Shchegolev, 2016
-	</footer>
 </body>
 </html>
