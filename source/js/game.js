@@ -2,6 +2,7 @@
 var Data = {}, View = {};
 
 
+
 EntryPoint = Marionette.Object.extend({
 	initialize: function() {
 		this.triggerMethod('get:dictionary');
@@ -53,9 +54,6 @@ EntryPoint = Marionette.Object.extend({
 	}
 })
 
-$.get('assets/dictionary.json').success(function(data){
-			
-		})
 Data.Main = Backbone.Model.extend({
 	defaults: function() {
 		return {

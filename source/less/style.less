@@ -1,6 +1,11 @@
 @import "palette.less";
 @import "mixins.less";
 @pad: 1rem;
+
+h1,h2,h3,h4,h5,h6 {
+	margin: 0.6em 0 0.3em;
+}
+
 a {
 	color: @palette-Green-A700;
 	&:hover {
@@ -118,6 +123,46 @@ html, body {
 		&.btn-super-success {
 			border-color: @palette-Green-200;
 			color: @palette-Green-600;
+		}
+	}
+}
+ul {
+	.transition(all 100ms);
+	transform-style: preserve-3d;
+	perspective: 500px;
+}
+.list-settings-item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	.input {
+		flex-grow: 0;
+		flex-shrink: 0;
+		flex-basis: 8em;
+		position: relative;
+		input {
+			text-align: right;
+			padding-right: @pad*4;
+		}
+		.measure {
+			color: @palette-Blue-Grey-200;
+			position: absolute;
+			right: 0;
+			width: @pad*4;
+			padding-left: 0.1em;
+			bottom: 7px;
+			margin: 0;
+		}
+	}
+	.name {
+		flex-grow: 3;
+		flex-shrink: 0;
+		.title {
+			font-size: 1.2em;
+			color: @palette-Blue-Grey-800;
+		}
+		.description {
+			color: @palette-Blue-Grey-500;
 		}
 	}
 }

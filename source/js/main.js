@@ -1,3 +1,12 @@
+function localSave(key,json) {
+	localStorage.setItem(key, JSON.stringify(json));
+	return true;
+};
+function localRead(key) {
+	var json = JSON.parse(localStorage.getItem(key));
+	return json;
+};
+
 var RegionSetter = function() {
 	this.arguments = arguments;
 	if (this.arguments.length == 1 && _.isArray(this.arguments[0])) {
@@ -60,7 +69,9 @@ app.on('start', (e) => {
 			if (e.rotationRate) {
 				_.extend(dataset,e.rotationRate);
 			};
- 			app.model.set(dataset);
+			_.delay(()=>{
+ 				app.model.set(dataset);
+			},100)
 			
 		}
 	};

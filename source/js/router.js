@@ -1,7 +1,7 @@
 var Router = Marionette.AppRouter.extend({
 	routes: { 
 		"" : 					"welcome",
-		"data":				"welcome",
+		"setup":				"setup",
 		"reports/:id":			"report",
 		"reports(/p:pid)(/:-*params)" : "reports", // все репорты с фильтрацией и паджинацией
 		
@@ -9,6 +9,9 @@ var Router = Marionette.AppRouter.extend({
 	},
 	welcome: function() {
 		new Game.Entry();
+	},
+	setup: function() {
+		new Setup.Entry();
 	},
 	showWord: function(dataset) {
 	},

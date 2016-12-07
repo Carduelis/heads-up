@@ -14,6 +14,7 @@
 	<script type="text/javascript" src="js/main.js"></script>
 	<script type="text/javascript" src="js/router.js"></script>
 	<script type="text/javascript" src="js/game.js"></script>
+	<script type="text/javascript" src="js/setup.js"></script>
 	<script type="text/javascript" src="js/accelerometer.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
@@ -51,6 +52,24 @@
 			<li><span class="title">beta:</span><span class="value"><%-beta%></span>
 			<li><span class="title">gamma:</span><span class="value"><%-gamma%></span>
 		</ul>
+	</script>
+	<script id="t-setting-item" type="text/template">
+		<div class="name">
+			<h4 class="title"><%-title%></h4>
+			<p class="description"><%-description%></p>
+		</div>
+		<div class="input">
+		<% if (options) { %>
+			<select class="form-control">
+			<% for (var i in options) { %>
+				<option value="<%-options[i].id%>"><%-options[i].name%></option>
+			<% } %>
+			</select>
+		<% } else { %>
+			<input class="form-control" type="<%-type%>" value="<%-value%>">
+			<p class="measure"><%-measure%>
+		<% } %>
+		</div>
 	</script>
 </body>
 </html>
