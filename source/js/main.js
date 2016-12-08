@@ -71,7 +71,7 @@ app.on('start', (e) => {
 			};
 			_.delay(()=>{
  				app.model.set(dataset);
-			},100)
+			},100);
 			
 		}
 	};

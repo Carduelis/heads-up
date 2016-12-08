@@ -2,7 +2,6 @@
 var Data = {}, View = {};
 
 
-
 EntryPoint = Marionette.Object.extend({
 	initialize: function() {
 		this.triggerMethod('get:dictionary');
@@ -43,13 +42,16 @@ EntryPoint = Marionette.Object.extend({
 		'correct'	:	'onCorrectWord',
 		'next'		:	'onNext' 	
 	},
-	onPassWord: function(e) {
-		console.log('kek',e);
+	onPassWord: function(view) {
+
+		view.model.set('guessed',false);
+		app.history.push(view.model);
 	},
-	onCorrectWord: function(e) {
-		console.log('onKek',e);
+	onCorrectWord: function(view) {
+		view.model.set('guessed',true);
+		app.history.push(view.model);
 	},
-	onNext: function (e) {
+	onNext: function (e,a,b) {
 		this.triggerMethod('dictionary:stored');
 	}
 })
@@ -57,15 +59,26 @@ EntryPoint = Marionette.Object.extend({
 Data.Main = Backbone.Model.extend({
 	defaults: function() {
 		return {
-			word: 'Default Word'
+			word: 'Default Word',
+			guessed: undefined
 		}
 	}
 });
+Data.History = Backbone.Collection.extend({
+	model: Data.Main,
+	initialize: function() {
+
+	}
+});
+app.history = new Data.History();
 View.Main = Marionette.View.extend({
 	template: '#t-main',
 	className: 'game-content',
 	initialize: function(options) {
-		this.model = new Data.Main(options.dataset)
+		this.model = new Data.Main(options.dataset);
+		_.delay(()=>{
+			this.bindEvents(app.model,this.accelerometerModelEvents);
+		},500);
 	},
 	templateContext: function() {
 		var length = this.model.get('word').length;
@@ -77,9 +90,29 @@ View.Main = Marionette.View.extend({
 			size: base+delta
 		}
 	},
+	accelerometerModelEvents: {
+		'change': 'onGravityChange'
+	},
 	triggers: {
 		'click [data-action="correct"]': 'correct',
 		'click [data-action="pass"]': 'pass',
+	},
+	onGravityChange: function(model) {
+		var tilt = model.get('gravity').z;
+		var accelerateTilt = model.get('z');
+		if (Math.abs(tilt) < 4) {
+			// ok-state
+		} else if (Math.abs(tilt) < 6) {
+			// warning-state
+		}
+		if (tilt < -4 && accelerateTilt > 0.8) {
+			this.unbindEvents(app.model,this.accelerometerModelEvents);
+			this.triggerMethod('correct',this);
+		}
+		if (tilt > 6 && accelerateTilt < -0.8) {
+			this.unbindEvents(app.model,this.accelerometerModelEvents);
+			this.triggerMethod('pass',this);
+		}
 	},
 	onDisableButtons: function () {
 		this.$el.find('[data-action]').attr('disabled','disabled');	
@@ -93,6 +126,7 @@ View.Main = Marionette.View.extend({
 		_.delay(()=>{
 			this.$el.addClass('swiped');
 			_.delay(()=>{
+				console.log('before:next')
 				this.triggerMethod('next');
 			},300);
 		},300);
