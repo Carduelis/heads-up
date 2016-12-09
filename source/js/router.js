@@ -9,6 +9,7 @@ var Router = Marionette.AppRouter.extend({
 	},
 	welcome: function() {
 		new Game.Entry();
+		new Result.Entry();
 	},
 	setup: function() {
 		new Setup.Entry();

@@ -111,7 +111,7 @@ var AcceleratorDebug = Marionette.View.extend({
 })
 var RootView = Marionette.View.extend({
 	template: '#t-root',
-	regions: new RegionSetter('navibar','statusbar','content'),
+	regions: new RegionSetter('navibar','statusbar','content','result','timer'),
 	initialize: function(options) {
 		this.model = options.model;
 	},

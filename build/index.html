@@ -14,6 +14,7 @@
 	<script type="text/javascript" src="js/main.js"></script>
 	<script type="text/javascript" src="js/router.js"></script>
 	<script type="text/javascript" src="js/game.js"></script>
+	<script type="text/javascript" src="js/result.js"></script>
 	<script type="text/javascript" src="js/setup.js"></script>
 	<script type="text/javascript" src="js/accelerometer.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
@@ -28,6 +29,8 @@
 		<r-navibar></r-navibar>
 		<r-statusbar></r-statusbar>
 		<r-content></r-content>
+		<r-result></r-result>
+		<r-timer></r-timer>
 	</script>
 	<script id="t-main" type="text/template">
 		<button type="button" class="btn btn-super-danger" data-action="pass">Pass <i class="glyphicon glyphicon-remove"></i></button>
@@ -52,6 +55,19 @@
 			<li><span class="title">beta:</span><span class="value"><%-beta%></span>
 			<li><span class="title">gamma:</span><span class="value"><%-gamma%></span>
 		</ul>
+	</script>
+	<script id="t-result-word" type="text/template">
+		<% if (guessed) { %>
+			<div class="text-success">
+				<i class="glyphicon glyphicon-ok"></i>
+				<%-word%>
+			</div>
+		<% } else { %>
+			<div class="text-danger">
+				<i class="glyphicon glyphicon-remove"></i>
+				<%-word%>
+			</div>
+		<% } %>
 	</script>
 	<script id="t-setting-item" type="text/template">
 		<div class="name">

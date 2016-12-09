@@ -44,10 +44,12 @@ EntryPoint = Marionette.Object.extend({
 	},
 	onPassWord: function(view) {
 
+		console.log(view);
 		view.model.set('guessed',false);
 		app.history.push(view.model);
 	},
 	onCorrectWord: function(view) {
+		console.log(view);
 		view.model.set('guessed',true);
 		app.history.push(view.model);
 	},
@@ -126,7 +128,6 @@ View.Main = Marionette.View.extend({
 		_.delay(()=>{
 			this.$el.addClass('swiped');
 			_.delay(()=>{
-				console.log('before:next')
 				this.triggerMethod('next');
 			},300);
 		},300);
