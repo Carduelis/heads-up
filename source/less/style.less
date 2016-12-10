@@ -1,9 +1,50 @@
 @import "palette.less";
 @import "mixins.less";
 @pad: 1rem;
-@color-back: #000;
+@color-back: @palette-Teal-50;
+@color-accent: @palette-Lime-A200;
 h1,h2,h3,h4,h5,h6 {
+	color: @palette-Grey-800;
 	margin: 0.6em 0 0.3em;
+}
+
+
+[class~="btn-bordered"] {
+	background-color: transparent;
+	border: 1px solid transparent;
+}
+[data-action] {
+	cursor: pointer;
+}
+.container {
+	padding: 0 @pad*2.5;
+}
+
+
+.btn {
+	&:focus {
+		outline: none;
+		box-shadow: 0 @pad/4 @pad -@pad/4 @color-accent;
+	}
+	&:active {
+		outline: none;
+		box-shadow: 0 @pad/4 @pad -@pad/4 fadeout(@color-accent,50%);
+	}
+	 &:focus:active {
+	 	outline: none;
+		box-shadow: 0 @pad/4 @pad -@pad/4 fadeout(@color-accent,50%);
+	 }
+}
+
+.btn-bordered-accent {
+	background-color: @color-accent;
+	color: @palette-Teal-500;
+	border-color: @color-accent;
+}
+
+.btn-bordered-default {
+	background-color: @color-back;
+	color: @palette-Teal-500;
 }
 
 a {
@@ -12,7 +53,7 @@ a {
 		color: @palette-Green-A400;
 	}
 }
-.nolist() {
+.no-list() {
 	padding: 0;
 	margin: 0;
 	li {
@@ -22,18 +63,19 @@ a {
 .acc-debug {
 	position: fixed;
 	z-index: 999;
+	opacity: 0;
 	left: 0;
-	top: 0;
+	bottom: 0;
 	// background-color: rgba(255, 255, 255, 0.1); 
 	font-size: .75em;
 	padding: @pad/2;
 	overflow: hidden;
-	color: rgba(255, 255, 255, 0.5);
+	// color: rgba(255, 255, 255, 0.5);
 	width: 100%;
 	ul {
 		width: 33%;
 		float: left;
-		.nolist;
+		.no-list;
 		li {
 			white-space: nowrap;
 			overflow: hidden;
@@ -54,25 +96,91 @@ html, body {
 
 .timer {
 	position: fixed;
-	top: 0;
-	left: 50%;
-	background-color: rgba(255, 255, 255, 0.8);
+	bottom: 0;
+	z-index: 1001;
+	left: 0;
+	right: 0;
 	padding: @pad;
 	white-space: nowrap;
 	font-size: 2em;
-	div {
-		display: inline;
+	text-align: center;
+	.clock {
+		display: inline-block;
+		.card;
+		span {
+			min-width: @pad*4;
+			display: inline-block;
+		}
 	}
 }
 
 #app {
 	height: 100%;
 	position: relative;
+	> .root {
+		height: 100%;
+		padding-top: @pad*5;
+		position: relative;
+		overflow-y: auto;
+		-webkit-font-smoothing: touch;
+	}
+}
+.card {
+	border-radius: @pad/4;
+	background-color: #fff;
+	padding: @pad;
+	height: 100%;
+	box-shadow: 0 @pad/4 @pad/2 desaturate(@palette-Teal-100,20%);
+	h4 {
+		margin: @pad/4 0 @pad;
+		padding: @pad/2 0;
+		border-bottom: 1px solid @palette-Teal-100;
+	}
+	p {
+		color: @palette-Grey-600;
+		font-size: .85em;
+	}
+}
+.themes {
+	.no-list();
 	display: flex;
-	align-items: center;
-	justify-content: center;
-	> div {
-		// width: 100%;
+	flex-wrap: wrap;
+	margin: 0 -@pad/2*3;
+	li {
+		flex-grow: 1;
+		flex-shrink: 0;
+		flex-basis: 140px;
+		padding: @pad/2;
+		min-height: 140px;
+	}
+}
+.navibar {
+	background-color: @palette-Teal-500;
+	color: @palette-Teal-50;
+	position: fixed;
+	z-index: 1001;
+	left: 0;
+	top: 0;
+	right: 0;
+	.buttons {
+		padding: @pad;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+	h2 {
+		margin: 0;
+		font-size: 1.2em;
+		color: @palette-Teal-50;
+	}
+	&::after {
+		content: '';
+		height: @pad/3;
+		width: 100%;
+		position: absolute;
+		left: 0;
+		top: 100%;
+		#gradient > .vertical(rgba(0,0,0,.2),rgba(0,0,0,0));
 	}
 }
 #app-footer {
@@ -110,10 +218,14 @@ html, body {
 }
 .game-content {
 	text-align: center;
-	padding: @pad;
+	display: flex;
+	height: 100%;
+	align-items: center;
+	padding-bottom: @pad*5;
+	justify-content: center;
 	.transition(all 300ms);
 	&.correct {
-		background-color: fadeout(@palette-Light-Green-300,20%);
+		background-color: fadeout(@palette-Light-Green-A200,20%);
 		color: @palette-Green-600;
 		border-radius: @pad;	
 		&.swiped {
@@ -122,7 +234,7 @@ html, body {
 		}
 	}
 	&.pass {
-		background-color: fadeout(@palette-Red-300,20%);
+		background-color: fadeout(@palette-Red-A200,0%);
 		color: @palette-Red-600;
 		border-radius: @pad;	
 		&.swiped {
@@ -132,11 +244,12 @@ html, body {
 	}
 	.word-container {
 		padding: 0 @pad;
-		background-color: @palette-Blue-Grey-50;
+		background-color: @palette-Teal-300;
 		margin: @pad auto;
 		border-radius: @pad/2;
 		height: 8em;
 		line-height: 8em;
+		color: #fff;
 		overflow-y: auto;
 		// overflow-x: hidden;
 		min-width: @pad*20;
@@ -148,6 +261,7 @@ html, body {
 		letter-spacing: 0.1em;
 		margin: 0;
 		font-size: 3.4em;
+		color: inherit;
 		line-height: inherit;
 	}
 	.btn {

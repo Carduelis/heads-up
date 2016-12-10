@@ -4,13 +4,15 @@ var Data = {}, View = {};
 
 EntryPoint = Marionette.Object.extend({
 	initialize: function() {
+		var settings = localRead('settings');
 		var dataset = {};
+		time = _.find(settings, {title: 'Время на раунд'});
 		this.view = new View.Timer({
 			model: new Backbone.Model({
-				time: 10
+				time: time.value*10
 			})
 		});
-		app.rootView.getRegion('timer').show(this.view);
+		app.rootView.getRegion('footer').show(this.view);
 	},
 });
 
@@ -47,7 +49,7 @@ View.Timer = Marionette.View.extend({
 				this.model.set('time',time);
 			},1000)
 		} else {
-
+			
 			app.router.navigate('results',{
 				trigger: true
 			});

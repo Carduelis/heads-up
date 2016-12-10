@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title>Heads-up</title>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.15.0/lodash.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.2/lodash.min.js"></script>
 	<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.3.3/backbone.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/backbone.radio/2.0.0/backbone.radio.js"></script>
@@ -16,12 +16,15 @@
 	<script type="text/javascript" src="js/game.js"></script>
 	<script type="text/javascript" src="js/result.js"></script>
 	<script type="text/javascript" src="js/timer.js"></script>
+	<script type="text/javascript" src="js/navibar.js"></script>
+	<script type="text/javascript" src="js/welcome.js"></script>
 	<script type="text/javascript" src="js/setup.js"></script>
 	<script type="text/javascript" src="js/accelerometer.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
-	<section id="app" class="container">
+	<section id="app">
+		loading...
 	</section>
 	<footer id="app-footer">
 		<p class="small text-muted">Created by Pavel Shchegolev, 2016
@@ -30,15 +33,16 @@
 		<r-navibar></r-navibar>
 		<r-statusbar></r-statusbar>
 		<r-content></r-content>
-		<r-result></r-result>
-		<r-timer></r-timer>
+		<r-footer></r-footer>
 	</script>
 	<script id="t-main" type="text/template">
-		<button type="button" class="btn btn-super-danger" data-action="pass">Pass <i class="glyphicon glyphicon-remove"></i></button>
-		<div class="word-container">
-			<h1 style="font-size: <%-size%>em"><%-word%></h1>
+		<div class="game">
+			<button type="button" class="btn btn-super-danger" data-action="pass">Pass <i class="glyphicon glyphicon-remove"></i></button>
+			<div class="word-container">
+				<h1 style="font-size: <%-size%>em"><%-word%></h1>
+			</div>
+			<button type="button" class="btn btn-super-success" data-action="correct">Correct <i class="glyphicon glyphicon-ok"></i></button>
 		</div>
-		<button type="button" class="btn btn-super-success" data-action="correct">Correct <i class="glyphicon glyphicon-ok"></i></button>
 	</script>
 	<script id="t-accelerator-debug" type="text/template">
 		<ul>
@@ -77,19 +81,184 @@
 		</div>
 		<div class="input">
 		<% if (options) { %>
-			<select class="form-control">
+			<select class="form-control" <%-disabledState%>>
 			<% for (var i in options) { %>
 				<option value="<%-options[i].id%>"><%-options[i].name%></option>
 			<% } %>
 			</select>
 		<% } else { %>
-			<input class="form-control" type="<%-type%>" value="<%-value%>">
+			<input class="form-control" type="<%-type%>" value="<%-value%>" <%-disabledState%>>
 			<p class="measure"><%-measure%>
 		<% } %>
 		</div>
 	</script>
 	<script id="t-timer" type="text/template">
-		<%-minutes%> <%-seconds%>
+		<button class="btn btn-default" disabled><i class="glyphicon glyphicon-pause"></i></button>
+		<div class="clock">
+			<span><%-minutes%></span>:<span><%-seconds%></span>
+		</div>
+		<button class="btn btn-default" disabled><i class="glyphicon glyphicon-stop"></i></button>
+	</script>
+	<script id="t-navigate-bar" type="text/template">
+		<div class="container">
+			<div class="buttons">
+				<button class="btn btn-bordered" data-action="navigate" data-route="welcome">
+					<i class="glyphicon glyphicon-home"></i>
+				</button>
+				<h2 data-action="navigate" data-route="welcome">
+					Heads up game
+				</h2>
+				<button class="btn btn-bordered-accent"  data-action="navigate" data-route="game">
+					<i class="glyphicon glyphicon-star"></i>
+					Start
+				</button>
+				<button class="btn btn-bordered" data-action="navigate" data-route="setup">
+					<i class="glyphicon glyphicon-cog"></i>
+				</button>
+			</div>
+		</div>
+	</script>
+	<script id="t-welcome" type="text/template">
+		<h2>Heads up is a party-game</h2>
+		<p>Pick a theme and add your friends
+
+		<ul class="themes">
+			<li>
+				<div class="card">
+				<h4>Learn English</h4>
+				<p>Most common words, a list of 3000</p>
+			</li>
+			<li>
+				<div class="card">
+				<h4>Learn English</h4>
+				<p>Great Noun List (4401 words)</p>
+			</li>
+			<li><div class="card">
+				<h4>Test</h4>
+				<p>Under developing</p>
+				</div>
+			</li>
+			<li><div class="card">
+				<h4>Superheroes</h4>
+				<p>Under developing</p>
+				</div>
+			</li>
+			<li><div class="card">
+				<h4>TV shows</h4>
+				<p>Under developing</p>
+				</div>
+			</li>
+			<li><div class="card">
+				<h4>TV shows</h4>
+				<p>Under developing</p>
+				</div>
+			</li>
+			<li><div class="card">
+				<h4>TV shows</h4>
+				<p>Under developing</p>
+				</div>
+			</li>
+			<li><div class="card">
+				<h4>TV shows</h4>
+				<p>Under developing</p>
+				</div>
+			</li>
+			<li><div class="card">
+				<h4>TV shows</h4>
+				<p>Under developing</p>
+				</div>
+			</li>
+			<li><div class="card">
+				<h4>TV shows</h4>
+				<p>Under developing</p>
+				</div>
+			</li>
+			<li><div class="card">
+				<h4>TV shows</h4>
+				<p>Under developing</p>
+				</div>
+			</li>
+			<li><div class="card">
+				<h4>TV shows</h4>
+				<p>Under developing</p>
+				</div>
+			</li>
+			<li><div class="card">
+				<h4>TV shows</h4>
+				<p>Under developing</p>
+				</div>
+			</li>
+			<li><div class="card">
+				<h4>TV shows</h4>
+				<p>Under developing</p>
+				</div>
+			</li>
+			<li><div class="card">
+				<h4>TV shows</h4>
+				<p>Under developing</p>
+				</div>
+			</li>
+			<li><div class="card">
+				<h4>TV shows</h4>
+				<p>Under developing</p>
+				</div>
+			</li>
+			<li><div class="card">
+				<h4>TV shows</h4>
+				<p>Under developing</p>
+				</div>
+			</li>
+			<li><div class="card">
+				<h4>TV shows</h4>
+				<p>Under developing</p>
+				</div>
+			</li>
+			<li><div class="card">
+				<h4>TV shows</h4>
+				<p>Under developing</p>
+				</div>
+			</li>
+			<li><div class="card">
+				<h4>TV shows</h4>
+				<p>Under developing</p>
+				</div>
+			</li>
+			<li><div class="card">
+				<h4>TV shows</h4>
+				<p>Under developing</p>
+				</div>
+			</li>
+			<li><div class="card">
+				<h4>TV shows</h4>
+				<p>Under developing</p>
+				</div>
+			</li>
+			<li><div class="card">
+				<h4>TV shows</h4>
+				<p>Under developing</p>
+				</div>
+			</li>
+			<li><div class="card">
+				<h4>TV shows</h4>
+				<p>Under developing</p>
+				</div>
+			</li>
+			<li><div class="card">
+				<h4>TV shows</h4>
+				<p>Under developing</p>
+				</div>
+			</li>
+			<li><div class="card">
+				<h4>TV shows</h4>
+				<p>Under developing</p>
+				</div>
+			</li>
+			<li><div class="card">
+				<h4>TV shows</h4>
+				<p>Under developing</p>
+				</div>
+			</li>
+		</ul>			
 	</script>
 </body>
 </html>

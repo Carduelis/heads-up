@@ -1,6 +1,7 @@
 var Router = Marionette.AppRouter.extend({
 	routes: { 
 		"" : 					"welcome",
+		"welcome" : 			"welcome",
 		"setup":				"setup",
 		"game":				"game",
 		"result": "result",
@@ -11,21 +12,18 @@ var Router = Marionette.AppRouter.extend({
 		"data/:entity(/p:page)(/f*params)":	"rootCollection",
 	},
 	welcome: function() {
-		new Game.Entry();
-		// new Result.Entry();
+		app.rootView.getRegion('content').show(new Welcome.Entry());
+		app.rootView.getRegion('footer').empty();
 	},
 	game: function () {
 		app.history.reset();
-		this.clearRegions();
 		new Timer.Entry();
 		new Game.Entry();
 	},
 	result: function () {
-		this.clearRegions();
 		new Result.Entry();
 	},
 	setup: function() {
-		this.clearRegions();
 		new Setup.Entry();
 	},
 	showWord: function(dataset) {
@@ -33,11 +31,5 @@ var Router = Marionette.AppRouter.extend({
 	onRoute: function(name, path, args) {
 		console.log(name, path, args);
 	},
-	clearRegions: function(regions) {
-		var regions = app.rootView.regions;
-		for (var i in regions) {
-			app.rootView.getRegion(i).empty();
-		}
-	}
 });
 app.router = new Router();

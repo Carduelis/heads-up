@@ -11,7 +11,7 @@ EntryPoint = Marionette.Object.extend({
 
 			this.triggerMethod('dictionary:stored')
 		} else {
-			$.get('assets/dictionary.json').success(dictionary => {
+			$.get('assets/great_noun_list.json').success(dictionary => {
 				this.dictionary = dictionary;
 				this.triggerMethod('dictionary:stored', dictionary)
 			});

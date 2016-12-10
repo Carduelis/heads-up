@@ -12,14 +12,20 @@ EntryPoint = Marionette.Object.extend({
 				{
 					title: 'Количество команд',
 					type: 'number',
+					name: 'teams',
+					disabledState: 'disabled',
 					value: 2
 				},{
 					title: 'Время на раунд',
 					type: 'number',
 					value: 4,
+					name: 'time',
+					disabledState: null,
 					measure: 'мин'
 				},{
 					title: 'Категория',
+					disableState: 'disabled',
+					name: 'category',
 					type: 'select',
 					value: 1,
 					options: [
@@ -55,6 +61,7 @@ Data.Setting = Backbone.Model.extend({
 			description: null,
 			options: null,
 			measure: null,
+			disabledState: 'disabled',
 			value: null,
 		}
 	}
@@ -90,6 +97,7 @@ View.Settings = Marionette.CollectionView.extend({
 		'change' : 'onGravityChange'
 	},
 	onModelChange: function() {
+		console.log('saved')
 		localSave('settings',this.collection.models);
 	},
 	onGravityChange: function(model) {

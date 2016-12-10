@@ -55,7 +55,6 @@ var App = Marionette.Application.extend({
 			model: this.model
 		});
 		this.getRegion().show(this.rootView);
-		// this.showView(new RootView()); // are the same
 	},
 });
 app = new App();
@@ -75,9 +74,6 @@ app.on('start', (e) => {
 			
 		}
 	};
-});
-app.on('before:start', 	(e) => {
-	
 });
 
 var AcceleratorDebug = Marionette.View.extend({
@@ -111,14 +107,16 @@ var AcceleratorDebug = Marionette.View.extend({
 })
 var RootView = Marionette.View.extend({
 	template: '#t-root',
-	regions: new RegionSetter('navibar','statusbar','content','result','timer'),
+	className: 'root',
+	regions: new RegionSetter('navibar','statusbar','content','footer'),
 	initialize: function(options) {
 		this.model = options.model;
 	},
 	onRender: function () {
-		this.getRegion('navibar').show(new AcceleratorDebug({
+		this.getRegion('statusbar').show(new AcceleratorDebug({
 			model: this.model
 		}));
+		this.getRegion('navibar').show(new Navibar.View());
 	}
 });
 
