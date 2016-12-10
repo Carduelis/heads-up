@@ -1,7 +1,7 @@
 @import "palette.less";
 @import "mixins.less";
 @pad: 1rem;
-
+@color-back: #000;
 h1,h2,h3,h4,h5,h6 {
 	margin: 0.6em 0 0.3em;
 }
@@ -47,11 +47,23 @@ a {
 }
 
 html, body {
-	background-color: #000;
+	background-color: @color-back;
 	height: 100%;
 	overflow: hidden;
 }
 
+.timer {
+	position: fixed;
+	top: 0;
+	left: 50%;
+	background-color: rgba(255, 255, 255, 0.8);
+	padding: @pad;
+	white-space: nowrap;
+	font-size: 2em;
+	div {
+		display: inline;
+	}
+}
 
 #app {
 	height: 100%;
@@ -70,9 +82,31 @@ html, body {
 	bottom: 0;
 }
 .result {
-	position: fixed;
-	top: @pad*6;
-	left: @pad;
+	font-size: 3em;
+	overflow-y: auto;
+	height: 100vh;
+	position: relative;
+	-webkit-overflow-scrolling: touch;
+	&::before, &::after {
+		content: '';
+		position: fixed;
+		left: 0;
+		right: 0;
+		height: @pad*2;
+		z-index: 2;
+		// background-color: rgba(0,0,0,.3);
+	}
+	&::before {
+		top: 0;
+		#gradient > .vertical(@color-back,fadeout(@color-back,100%));
+	}
+	&::after {
+		bottom: 0;
+		#gradient > .vertical(fadeout(@color-back,100%), @color-back);
+	}
+	i {
+		font-size: .5em;
+	}
 }
 .game-content {
 	text-align: center;

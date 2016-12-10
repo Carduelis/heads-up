@@ -7,7 +7,7 @@ EntryPoint = Marionette.Object.extend({
 		wordList = new View.List({
 			collection : app.history
 		});
-		app.rootView.getRegion('result').show(wordList);
+		app.rootView.getRegion('content').show(wordList);
 	},
 
 });
