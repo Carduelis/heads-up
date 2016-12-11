@@ -9,7 +9,7 @@ To-do list
 - [ ] Fix navigation-bar states
 - [ ] Add teams-functionality
 - [ ] Add pause-button and revert a word feature
-- [ ] Create manifest.json and icon
+- [x] Create manifest.json and icon
 - [ ] Add real dictionaries
 - [ ] Fix accelerometer issues
 - [ ] Test accelerometer on different devices
