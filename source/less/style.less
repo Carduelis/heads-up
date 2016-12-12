@@ -281,22 +281,30 @@ html, body {
 	height: 100%;
 	align-items: center;
 	padding-bottom: @pad*5;
+	overflow: hidden;
 	justify-content: center;
 	.transition(all 300ms);
+	.game {
+		.transition(all 300ms);
+	}
 	&.correct {
 		background-color: fadeout(@palette-Light-Green-A200,20%);
 		color: @palette-Green-600;
 		border-radius: @pad;	
-		&.swiped {
+		&.swiped .game {
 			.translate(0, 100%);
 			opacity: 0;
 		}
+	}
+	&.warning {
+		// background-color: fadeout(@palette-Orange-100,70%);
+		background-color: @palette-Orange-100;
 	}
 	&.pass {
 		background-color: fadeout(@palette-Red-A200,0%);
 		color: @palette-Red-600;
 		border-radius: @pad;	
-		&.swiped {
+		&.swiped .game {
 			.translate(0, -100%);
 			opacity: 0;
 		}
@@ -327,6 +335,7 @@ html, body {
 		max-width: @pad*20;
 		margin: 0 auto;
 		padding: @pad*2 @pad*5;
+		.transition(all 300ms);
 		// background-color: transparent;
 		&.btn-super-danger {
 			border-color: @palette-Red-300;
@@ -337,6 +346,12 @@ html, body {
 			border-color: @palette-Green-200;
 			background-color: rgba(255, 255, 255, 0.1);
 			color: @palette-Green-600;
+		}
+		&:active {
+			.scale(1.6);
+		}
+		&[disabled] {
+			opacity: 0;
 		}
 	}
 }

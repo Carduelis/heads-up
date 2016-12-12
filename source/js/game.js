@@ -72,6 +72,13 @@ Data.History = Backbone.Collection.extend({
 
 	}
 });
+
+// word appears | vertical
+// word correct | tilted
+// word animated | tilted
+// word appears | tilted
+// word listen accelerometer 
+
 app.history = new Data.History();
 View.Main = Marionette.View.extend({
 	template: '#t-main',
@@ -102,27 +109,33 @@ View.Main = Marionette.View.extend({
 	onGravityChange: function(model) {
 		var tilt = model.get('gravity').z;
 		var accelerateTilt = model.get('z');
-		if (Math.abs(tilt) < 4) {
-			// ok-state
-		} else if (Math.abs(tilt) < 6) {
-			// warning-state
+		var conditions = {
+			vertical		 : Math.abs(tilt) < 4,
+			warningVertical	 : Math.abs(tilt) < 6 && !(Math.abs(tilt) < 4),
+			wordCorrect		 : tilt < -4 && accelerateTilt > 0.8,
+			wordIncorrect	 : tilt > 6 && accelerateTilt < -0.8,
+		};
+
+		if (conditions.vertical) {
+			this.trigger('normal:state')
+			if (conditions.wordCorrect) {
+				this.triggerMethod('correct',this);
+			}
+			if (conditions.wordIncorrect) {
+				this.triggerMethod('pass',this);
+			}
 		}
-		if (tilt < -4 && accelerateTilt > 0.8) {
-			this.unbindEvents(app.model,this.accelerometerModelEvents);
-			this.triggerMethod('correct',this);
-		}
-		if (tilt > 6 && accelerateTilt < -0.8) {
-			this.unbindEvents(app.model,this.accelerometerModelEvents);
-			this.triggerMethod('pass',this);
+		if (conditions.warningVertical) {
+			this.trigger('warning:state');
 		}
 	},
-	onDisableButtons: function () {
-		this.$el.find('[data-action]').attr('disabled','disabled');	
+	onNormalState: function() {
+		this.$el.removeClass('warning');
+		stopVibrate();
 	},
-	onPass: function() {
-		this.triggerMethod('disable:buttons');
-		this.$el.addClass('pass');
-		this.triggerMethod('start:swipe:animation');
+	onWarningState: function() {
+		startPersitentVibrate(50,350);
+		this.$el.addClass('warning');
 	},
 	onStartSwipeAnimation: function () {
 		_.delay(()=>{
@@ -132,9 +145,24 @@ View.Main = Marionette.View.extend({
 			},300);
 		},300);
 	},
+	onDisableGuessing: function() {
+		// disable accelerometer-way
+		this.unbindEvents(app.model,this.accelerometerModelEvents);
+		// disable button-way
+		this.$el.find('[data-action]').attr('disabled','disabled');	
+	},
+	onPass: function() {
+		this.$el.addClass('pass');
+		this.triggerMethod('disable:guessing');
+		this.triggerMethod('start:swipe:animation');
+	},
+	onBeforeWordDissapearing: function() {
+		
+	},
 	onCorrect: function() {
-		this.triggerMethod('disable:buttons');
 		this.$el.addClass('correct');
+		this.triggerMethod('disable:guessing');
+
 		this.triggerMethod('start:swipe:animation');
 	},
 })
