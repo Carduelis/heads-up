@@ -3,12 +3,24 @@
 @pad: 1rem;
 @color-back: @palette-Teal-50;
 @color-accent: @palette-Lime-A200;
+
+.text-danger {
+	color: @palette-Red-700;	
+}
+.text-success {
+	color: @palette-Green-700;
+}
+
 h1,h2,h3,h4,h5,h6 {
 	color: @palette-Grey-800;
 	margin: 0.6em 0 0.3em;
 }
 
-
+.ellipsis {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
 [class*="btn-bordered"] {
 	background-color: transparent;
 	border: 1px solid transparent;
@@ -70,7 +82,7 @@ a {
 }
 .acc-debug {
 	position: fixed;
-	z-index: 999;
+	z-index: 1999;
 	// opacity: 0;
 	left: 0;
 	bottom: 0;
@@ -85,9 +97,7 @@ a {
 		float: left;
 		.no-list;
 		li {
-			white-space: nowrap;
-			overflow: hidden;
-			text-overflow: ellipsis;
+			.ellipsis;
 		}
 		.title {
 			width: @pad*4;
@@ -221,14 +231,14 @@ html, body {
 		}
 	}
 	.buttons {
-		padding: @pad;
-		padding-left: @pad*5;
+		padding: @pad 0;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 	}
 	h2 {
 		margin: 0;
+		padding: 0 @pad/2;
 		font-size: 1.2em;
 		color: @palette-Teal-50;
 	}
@@ -249,30 +259,39 @@ html, body {
 	bottom: 0;
 }
 .result {
-	font-size: 3em;
+	font-size: 2em;
 	overflow-y: auto;
-	height: 100vh;
+	padding-bottom: @pad*5;
 	position: relative;
 	-webkit-overflow-scrolling: touch;
-	&::before, &::after {
-		content: '';
-		position: fixed;
-		left: 0;
-		right: 0;
-		height: @pad*2;
-		z-index: 2;
-		// background-color: rgba(0,0,0,.3);
-	}
-	&::before {
-		top: 0;
-		#gradient > .vertical(@color-back,fadeout(@color-back,100%));
-	}
-	&::after {
-		bottom: 0;
-		#gradient > .vertical(fadeout(@color-back,100%), @color-back);
+	// &::before, &::after {
+	// 	content: '';
+	// 	position: fixed;
+	// 	left: 0;
+	// 	right: 0;
+	// 	height: @pad*2;
+	// 	z-index: 2;
+	// 	// background-color: rgba(0,0,0,.3);
+	// }
+	// &::before {
+	// 	top: 0;
+	// 	#gradient > .vertical(@color-back,fadeout(@color-back,100%));
+	// }
+	// &::after {
+	// 	bottom: 0;
+	// 	#gradient > .vertical(fadeout(@color-back,100%), @color-back);
+	// }
+	> div {
+		padding: 0 @pad*2;
+		margin: @pad 0;
+		> div {
+			.ellipsis;
+		}
 	}
 	i {
-		font-size: .5em;
+		font-size: .4em;
+		top: -0.15em;
+		margin-right: @pad/2;
 	}
 }
 .game-content {

@@ -8,32 +8,39 @@ EntryPoint = Marionette.Object.extend({
 	},
 	onGetDictionary: function() {
 		if(localStorage.getItem('dictionary')) {
-
-			this.triggerMethod('dictionary:stored')
+			this.triggerMethod('dictionary:stored',localStorage.getItem('dictionary'))
 		} else {
 			$.get('assets/great_noun_list.json').success(dictionary => {
-				this.dictionary = dictionary;
 				this.triggerMethod('dictionary:stored', dictionary)
 			});
-
 		}
 	},
-	onDictionaryStored: function(dictionary) {
+	pickWord: function() {
+		// to do 
+		// 1. trim dictionary (amount of words === seconds) 
+		// 2. shuffle trimmed dictionary
+		// 3. pick next word 
 		var dictionary = this.getOption('dictionary');
+		var pickedWords = this.getOption('pickedWords');
 		var length = dictionary.length;
-		var pickedWords = [];
-		getRandomWord = function() {
-			var i = _.random(0,length-1);
-			return dictionary[i]
+		var wordId = _.random(0,length-1);
+		while (typeof pickedWords[wordId] !== 'undefined') {
+			wordId = _.random(0,length-1);
 		}
-		var theWord = getRandomWord();
-		pickedWords.push(theWord);
-
+		pickedWords[wordId] = dictionary[wordId];
+		return dictionary[wordId]
+	},
+	onDictionaryStored: function(dictionary) {
+		this.dictionary = dictionary;
+		this.pickedWords = {};	
+		this.triggerMethod('show:word');
+	},
+	onShowWord: function() {
 		this.view = new Game.View.Main({
 			dataset: {
-				word: theWord
+				word: this.pickWord()
 			}
-		})
+		});
 		app.rootView.getRegion('content').show(this.view);
 		this.bindEvents(this.view,this.childviewEvents);
 	},
@@ -54,7 +61,10 @@ EntryPoint = Marionette.Object.extend({
 		app.history.push(view.model);
 	},
 	onNext: function (e,a,b) {
-		this.triggerMethod('dictionary:stored');
+		if (app.timer.view.model.get('time') > 0) {
+			this.triggerMethod('show:word');
+		}
+
 	}
 })
 
@@ -111,30 +121,37 @@ View.Main = Marionette.View.extend({
 		var accelerateTilt = model.get('z');
 		var conditions = {
 			vertical		 : Math.abs(tilt) < 4,
-			warningVertical	 : Math.abs(tilt) < 6 && !(Math.abs(tilt) < 4),
+			warningVertical	 : Math.abs(tilt) < 6 && Math.abs(tilt) > 4,
 			wordCorrect		 : tilt < -4 && accelerateTilt > 0.8,
 			wordIncorrect	 : tilt > 6 && accelerateTilt < -0.8,
 		};
 
 		if (conditions.vertical) {
-			this.trigger('normal:state')
-			if (conditions.wordCorrect) {
-				this.triggerMethod('correct',this);
-			}
-			if (conditions.wordIncorrect) {
-				this.triggerMethod('pass',this);
-			}
+			this.triggerMethod('normal:state')
+		}
+		if (conditions.wordCorrect) {
+			this.triggerMethod('correct',this);
+		}
+		if (conditions.wordIncorrect) {
+			this.triggerMethod('pass',this);
 		}
 		if (conditions.warningVertical) {
-			this.trigger('warning:state');
+			this.triggerMethod('warning:state', tilt);
 		}
 	},
 	onNormalState: function() {
 		this.$el.removeClass('warning');
+		console.log('normal:state')
 		stopVibrate();
 	},
-	onWarningState: function() {
-		startPersitentVibrate(50,350);
+	onWarningState: function(tilt) {
+		var vibroFrequencyModifier = (Math.abs(tilt)-4)*100;
+		var baseVibroFrequency = 350;
+		var frequency = vibroFrequencyModifier + baseVibroFrequency;
+		if (!vibrateInterval) {
+			startPeristentVibrate(50,350);
+		}
+		console.log('warning:state')
 		this.$el.addClass('warning');
 	},
 	onStartSwipeAnimation: function () {

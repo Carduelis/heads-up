@@ -74,6 +74,10 @@ app.on('start', (e) => {
 			
 		}
 	};
+	// if (window.DeviceOrientationEvent) {
+	// 	window.addEventListener('deviceorientation', deviceOrientationHandler, false);
+		
+	// }
 });
 
 var AcceleratorDebug = Marionette.View.extend({

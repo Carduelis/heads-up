@@ -17,8 +17,8 @@ var Router = Marionette.AppRouter.extend({
 	},
 	game: function () {
 		app.history.reset();
-		new Timer.Entry();
-		new Game.Entry();
+		app.timer = new Timer.Entry();
+		app.game = new Game.Entry();
 	},
 	result: function () {
 		new Result.Entry();

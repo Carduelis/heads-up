@@ -17,8 +17,7 @@ EntryPoint = Marionette.Object.extend({
 		}
 		this.view = new View.Timer({
 			model: new Backbone.Model({
-				// time: time,
-				time: 100000,
+				time: time,
 			})
 		});
 		app.rootView.getRegion('footer').show(this.view);

@@ -1,4 +1,4 @@
-var vibrateInterval;
+var vibrateInterval = false;
 
 // Starts vibration at passed in level
 function startVibrate(duration) {
@@ -8,7 +8,10 @@ function startVibrate(duration) {
 // Stops vibration
 function stopVibrate() {
     // Clear interval and stop persistent vibrating
-    if(vibrateInterval) clearInterval(vibrateInterval);
+    if(vibrateInterval) {
+    	clearInterval(vibrateInterval);
+    	vibrateInterval = false;
+    }
     navigator.vibrate(0);
 }
 
