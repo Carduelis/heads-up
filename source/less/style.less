@@ -9,7 +9,12 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 
-[class~="btn-bordered"] {
+[class*="btn-bordered"] {
+	background-color: transparent;
+	border: 1px solid transparent;
+}
+
+[class*="btn-simple"] {
 	background-color: transparent;
 	border: 1px solid transparent;
 }
@@ -20,6 +25,9 @@ h1,h2,h3,h4,h5,h6 {
 	padding: 0 @pad*2.5;
 }
 
+.btn-simple-dark {
+	color: @palette-Teal-500;
+}
 
 .btn {
 	&:focus {
@@ -63,7 +71,7 @@ a {
 .acc-debug {
 	position: fixed;
 	z-index: 999;
-	opacity: 0;
+	// opacity: 0;
 	left: 0;
 	bottom: 0;
 	// background-color: rgba(255, 255, 255, 0.1); 
@@ -101,6 +109,7 @@ html, body {
 	left: 0;
 	right: 0;
 	padding: @pad;
+	color: @palette-Teal-500;
 	white-space: nowrap;
 	font-size: 2em;
 	text-align: center;
@@ -108,8 +117,25 @@ html, body {
 		display: inline-block;
 		.card;
 		span {
-			min-width: @pad*4;
+			min-width: 0.75em;
 			display: inline-block;
+		}
+	}
+	@media (max-height: 420px) {
+		right: 0;
+		top: 0;
+		bottom: auto;
+		left: auto;
+		font-size: 1.2em;
+		.clock {
+			box-shadow: none;
+			background-color: transparent;
+			padding: 0;
+		}
+		.btn {
+			background-color: transparent;
+			border-color: transparent;
+			opacity: .5;
 		}
 	}
 }
@@ -154,6 +180,21 @@ html, body {
 		min-height: 140px;
 	}
 }
+[route="game"] {
+	.navibar {
+		.simple-view {
+
+			@media (max-height: 420px) {
+				display: block;
+			}
+		}
+		.container {
+			@media (max-height: 420px) {
+				display: none;
+			}
+		}
+	}
+}
 .navibar {
 	background-color: @palette-Teal-500;
 	color: @palette-Teal-50;
@@ -162,8 +203,26 @@ html, body {
 	left: 0;
 	top: 0;
 	right: 0;
+	.simple-view {
+		position: absolute;
+		left: @pad;
+		top: @pad;
+		display: none;
+
+	}
+	.container {
+		// display: block;
+		position: relative;
+		> .btn {
+			position: absolute;
+			left: 0;
+			top: 0;
+			margin: @pad;
+		}
+	}
 	.buttons {
 		padding: @pad;
+		padding-left: @pad*5;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;

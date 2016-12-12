@@ -4,7 +4,7 @@ If you are interested in give me a star here :-)
 
 To-do list
 - [ ] Fix results issue (results has not been shown after game over)
-- [ ] Adapt for horizontal mode
+- [x] Adapt for horizontal mode
 - [ ] Adapt full-screen mode
 - [ ] Fix navigation-bar states
 - [ ] Add teams-functionality

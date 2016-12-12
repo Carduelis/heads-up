@@ -29,7 +29,7 @@ var Router = Marionette.AppRouter.extend({
 	showWord: function(dataset) {
 	},
 	onRoute: function(name, path, args) {
-		console.log(name, path, args);
+		$('#app').attr('route',name);
 	},
 });
 app.router = new Router();

@@ -1,6 +1,9 @@
 (function(){
 var Data = {}, View = {};
 
+// to do
+// Timer is going down and model every 1s changes then render happens
+// Timer is not related model, model just gets value of the timer
 
 EntryPoint = Marionette.Object.extend({
 	initialize: function() {
@@ -14,7 +17,8 @@ EntryPoint = Marionette.Object.extend({
 		}
 		this.view = new View.Timer({
 			model: new Backbone.Model({
-				time: time
+				// time: time,
+				time: 100000,
 			})
 		});
 		app.rootView.getRegion('footer').show(this.view);
