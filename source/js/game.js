@@ -98,13 +98,38 @@ View.Main = Marionette.View.extend({
 		_.delay(()=>{
 			this.bindEvents(app.model,this.accelerometerModelEvents);
 		},500);
+		_.delay(()=>{
+			this.triggerMethod('vibra');
+		},1500);
+	},
+	onVibra: function() {
+		stopVibrate();
+		if (this.getOption('doNotVibrate') !== true) {
+			var tilt = app.model.get('gravity').z;
+			var vibroFrequencyModifier = Math.abs(tilt)-3;
+			// [tilt 0..2]
+			// 0 - rare
+			// 2 - frequently
+			if (Math.abs(tilt) < 6 && Math.abs(tilt) > 3) {
+				delay = 300 - vibroFrequencyModifier*100;
+				// delay = delay < 100 ? 100 : delay;
+				delay = 100;
+				duration = 10 + vibroFrequencyModifier*10;
+				duration = duration > 50 ? 50 : duration;
+				startPeristentVibrate(duration, delay);
+			}
+
+			_.delay(()=>{
+				this.triggerMethod('vibra')
+			},300)
+		}
 	},
 	templateContext: function() {
 		var length = this.model.get('word').length;
 		var base = 1;
 		var width = $(document).width();
 		var k = width*0.8/length/16
-		var delta = k < 4 ? k : 4; 
+		var delta = k < 3 ? k : 3; 
 		return {
 			size: base+delta
 		}
@@ -120,9 +145,9 @@ View.Main = Marionette.View.extend({
 		var tilt = model.get('gravity').z;
 		var accelerateTilt = model.get('z');
 		var conditions = {
-			vertical		 : Math.abs(tilt) < 4,
-			warningVertical	 : Math.abs(tilt) < 6 && Math.abs(tilt) > 4,
-			wordCorrect		 : tilt < -4 && accelerateTilt > 0.8,
+			vertical		 : Math.abs(tilt) < 3,
+			warningVertical	 : Math.abs(tilt) < 6 && Math.abs(tilt) > 3,
+			wordCorrect		 : tilt < -6 && accelerateTilt > 0.8,
 			wordIncorrect	 : tilt > 6 && accelerateTilt < -0.8,
 		};
 
@@ -130,9 +155,11 @@ View.Main = Marionette.View.extend({
 			this.triggerMethod('normal:state')
 		}
 		if (conditions.wordCorrect) {
+			this.triggerMethod('normal:state');
 			this.triggerMethod('correct',this);
 		}
 		if (conditions.wordIncorrect) {
+			this.triggerMethod('normal:state');
 			this.triggerMethod('pass',this);
 		}
 		if (conditions.warningVertical) {
@@ -145,11 +172,11 @@ View.Main = Marionette.View.extend({
 		stopVibrate();
 	},
 	onWarningState: function(tilt) {
-		var vibroFrequencyModifier = (Math.abs(tilt)-4)*100;
+		var vibroFrequencyModifier = Math.abs(tilt)-4;
 		var baseVibroFrequency = 350;
-		var frequency = vibroFrequencyModifier + baseVibroFrequency;
+		var frequency = vibroFrequencyModifier*100 + baseVibroFrequency;
 		if (!vibrateInterval) {
-			startPeristentVibrate(50,350);
+			// startPeristentVibrate(25,200);
 		}
 		console.log('warning:state')
 		this.$el.addClass('warning');
@@ -166,9 +193,17 @@ View.Main = Marionette.View.extend({
 		// disable accelerometer-way
 		this.unbindEvents(app.model,this.accelerometerModelEvents);
 		// disable button-way
-		this.$el.find('[data-action]').attr('disabled','disabled');	
+		this.$el.find('[data-action]').attr('disabled','disabled');
+		// disable vibra
+		this.doNotVibrate = true;
 	},
 	onPass: function() {
+		// stopVibrate();
+		// startVibrate(200);
+		// _.delay(()=>{
+		// 	startVibrate(100);
+		// },100)
+		playSound('wrong');
 		this.$el.addClass('pass');
 		this.triggerMethod('disable:guessing');
 		this.triggerMethod('start:swipe:animation');
@@ -176,7 +211,16 @@ View.Main = Marionette.View.extend({
 	onBeforeWordDissapearing: function() {
 		
 	},
+	onPrev : function() {
+		prevWordModel = app.history.last()
+	},
 	onCorrect: function() {
+		// stopVibrate();
+		// startVibrate(100);
+		// _.delay(()=>{
+		// 	startVibrate(200);
+		// },100)
+		playSound('correct');
 		this.$el.addClass('correct');
 		this.triggerMethod('disable:guessing');
 

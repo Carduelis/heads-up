@@ -6,7 +6,12 @@ function localRead(key) {
 	var json = JSON.parse(localStorage.getItem(key));
 	return json;
 };
-
+function playSound(id) {
+	var sound = $('#audio-'+id).get(0);
+	sound.pause();
+	sound.currentTime = 0;
+	sound.play();
+}
 var RegionSetter = function() {
 	this.arguments = arguments;
 	if (this.arguments.length == 1 && _.isArray(this.arguments[0])) {
@@ -68,9 +73,9 @@ app.on('start', (e) => {
 			if (e.rotationRate) {
 				_.extend(dataset,e.rotationRate);
 			};
-			_.delay(()=>{
+			// _.delay(()=>{
  				app.model.set(dataset);
-			},100);
+			// },100);
 			
 		}
 	};

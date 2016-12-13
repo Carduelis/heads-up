@@ -199,7 +199,26 @@ html, body {
 	}
 	p {
 		color: @palette-Grey-600;
-		font-size: .85em;
+	}
+}
+.themes > li {
+	&:nth-of-type(4n) .card {
+		background-color: @palette-Orange-50;
+		h4 {
+			border-color: @palette-Orange-200;
+		}
+	}
+	&:nth-of-type(4n+1) .card {
+		background-color: @palette-Red-50;
+		h4 {
+			border-color: @palette-Red-200;
+		}
+	}
+	&:nth-of-type(4n+2) .card {
+		background-color: @palette-Purple-50;
+		h4 {
+			border-color: @palette-Purple-200;
+		}
 	}
 }
 .themes {
@@ -406,8 +425,8 @@ html, body {
 }
 ul {
 	.transition(all 100ms);
-	transform-style: preserve-3d;
-	perspective: 500px;
+	// transform-style: preserve-3d;
+	// perspective: 500px;
 }
 .list-settings-item {
 	display: flex;

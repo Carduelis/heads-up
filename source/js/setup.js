@@ -83,7 +83,7 @@ View.SettingItem = Marionette.View.extend({
 });
 View.Settings = Marionette.CollectionView.extend({
 	tagName: 'ul',
-	className: 'list-group',
+	className: 'list-group navibar-pad',
 	childView: View.SettingItem,
 	initialize: function (options) {
 		this.collection = new Data.Settings(options.dataset);
