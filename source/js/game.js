@@ -102,6 +102,9 @@ View.Main = Marionette.View.extend({
 			this.triggerMethod('vibra');
 		},1500);
 	},
+	onBeforeDestoy: function() {
+		this.doNotVibrate = true;
+	},
 	onVibra: function() {
 		stopVibrate();
 		if (this.getOption('doNotVibrate') !== true) {
@@ -172,12 +175,6 @@ View.Main = Marionette.View.extend({
 		stopVibrate();
 	},
 	onWarningState: function(tilt) {
-		var vibroFrequencyModifier = Math.abs(tilt)-4;
-		var baseVibroFrequency = 350;
-		var frequency = vibroFrequencyModifier*100 + baseVibroFrequency;
-		if (!vibrateInterval) {
-			// startPeristentVibrate(25,200);
-		}
 		console.log('warning:state')
 		this.$el.addClass('warning');
 	},

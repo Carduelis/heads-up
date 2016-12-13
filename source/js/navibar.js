@@ -13,6 +13,7 @@ View.Main = Marionette.View.extend({
 	},
 	navigate: function(e) {
 		var routeName = e.currentTarget.dataset.route;
+			
 		app.router.navigate(routeName,{
 			trigger:true
 		})

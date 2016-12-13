@@ -20,7 +20,7 @@ EntryPoint = Marionette.Object.extend({
 					type: 'number',
 					value: 4,
 					name: 'time',
-					disabledState: null,
+					disabledState: false,
 					measure: 'мин'
 				},{
 					title: 'Категория',

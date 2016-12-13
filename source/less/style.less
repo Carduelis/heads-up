@@ -149,9 +149,20 @@ html, body {
 	white-space: nowrap;
 	font-size: 2em;
 	text-align: center;
+	.transition(transform 300ms);
+	&.bound-out {
+		.translate(0, 100px);
+	}
+	&.time-is-up {
+		.clock {
+			background: @palette-Red-500;
+			color: #fff;
+		}
+	}
 	.clock {
 		display: inline-block;
 		.card;
+		.transition(background 300ms);
 		span {
 			min-width: 0.75em;
 			display: inline-block;
@@ -305,6 +316,7 @@ html, body {
 .result {
 	font-size: 2em;
 	overflow-y: auto;
+	padding-top: @f-pad;
 	padding-bottom: @f-pad;
 	position: relative;
 	-webkit-overflow-scrolling: touch;
@@ -351,7 +363,7 @@ html, body {
 	}
 	overflow: hidden;
 	justify-content: center;
-	.transition(all 300ms);
+	.transition(all 500ms);
 	.game {
 		.transition(all 300ms);
 	}
