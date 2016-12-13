@@ -1,8 +1,26 @@
 @import "palette.less";
 @import "mixins.less";
+html {
+	font-size: 14px;
+	@media (max-width: 420px) {
+		font-size: 10px;
+	}
+	@media (max-width: 520px) {
+		font-size: 12px;
+	}
+	@media (min-width: 700px) {
+		font-size: 16px;
+	}
+}
+body {
+	font-size: inherit;
+}
 @pad: 1rem;
 @color-back: @palette-Teal-50;
-@color-accent: @palette-Lime-A200;
+@color-accent: @palette-Orange-A200;
+
+@n-pad: @pad*5; // navibar
+@f-pad: @pad*5; // footer
 
 .text-danger {
 	color: @palette-Red-700;	
@@ -11,11 +29,20 @@
 	color: @palette-Green-700;
 }
 
+.navibar-pad {
+	padding-top: @n-pad;
+	&.container {
+		padding-top: @n-pad;
+	}
+}
+
 h1,h2,h3,h4,h5,h6 {
 	color: @palette-Grey-800;
 	margin: 0.6em 0 0.3em;
 }
-
+.navigate-pad {
+	padding-top: @n-pad;
+}
 .ellipsis {
 	white-space: nowrap;
 	overflow: hidden;
@@ -42,23 +69,22 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .btn {
+	padding: @pad/2 @pad;
+	font-size: @pad*1.25;
 	&:focus {
 		outline: none;
-		box-shadow: 0 @pad/4 @pad -@pad/4 @color-accent;
 	}
 	&:active {
 		outline: none;
-		box-shadow: 0 @pad/4 @pad -@pad/4 fadeout(@color-accent,50%);
 	}
 	 &:focus:active {
 	 	outline: none;
-		box-shadow: 0 @pad/4 @pad -@pad/4 fadeout(@color-accent,50%);
 	 }
 }
 
 .btn-bordered-accent {
 	background-color: @color-accent;
-	color: @palette-Teal-500;
+	color: darken(@color-accent,44%);
 	border-color: @color-accent;
 }
 
@@ -155,7 +181,6 @@ html, body {
 	position: relative;
 	> .root {
 		height: 100%;
-		padding-top: @pad*5;
 		position: relative;
 		overflow-y: auto;
 		-webkit-font-smoothing: touch;
@@ -261,7 +286,7 @@ html, body {
 .result {
 	font-size: 2em;
 	overflow-y: auto;
-	padding-bottom: @pad*5;
+	padding-bottom: @f-pad;
 	position: relative;
 	-webkit-overflow-scrolling: touch;
 	// &::before, &::after {
@@ -299,7 +324,12 @@ html, body {
 	display: flex;
 	height: 100%;
 	align-items: center;
-	padding-bottom: @pad*5;
+	padding-top: @n-pad;
+	padding-bottom: @f-pad;
+	@media (max-height: 420px) {
+		padding-bottom: 0;
+		padding-top: 0;
+	}
 	overflow: hidden;
 	justify-content: center;
 	.transition(all 300ms);
@@ -353,7 +383,7 @@ html, body {
 	.btn {
 		max-width: @pad*20;
 		margin: 0 auto;
-		padding: @pad*2 @pad*5;
+		padding: @pad @pad*5;
 		.transition(all 300ms);
 		// background-color: transparent;
 		&.btn-super-danger {

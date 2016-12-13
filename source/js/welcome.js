@@ -3,7 +3,7 @@ var Data = {}, View = {};
 
 EntryPoint = Marionette.View.extend({
 	template: '#t-welcome',
-	className: 'container',
+	className: 'container navibar-pad',
 	tagName: 'section',
 	initialize: function(options) {
 	},
