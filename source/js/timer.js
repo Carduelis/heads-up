@@ -92,6 +92,24 @@ View.Timer = Marionette.View.extend({
 			'seconds':seconds
 		}
 	},
+	onScaled: function() {
+		console.log('scaled')
+		var duration = 300;
+		var tick = 1000;
+		var delay = (tick - duration*2)/2;
+		_.delay(()=>{
+			this.$el.toggleClass('scaled');
+			_.delay(()=>{
+				this.$el.toggleClass('scaled')
+			},delay);
+		},duration);
+	},
+	onHighlight: function() {
+		// this.$el.addClass('highlight')
+		_.delay(()=>{
+			this.$el.addClass('highlight');
+		},200);
+	},
 	onBeforeRender: function() {
 		if (this.model.get('time') == 0) {
 			_.delay(()=>{
@@ -105,6 +123,14 @@ View.Timer = Marionette.View.extend({
 					trigger: true
 				});
 			},1500);
+		}
+
+		if (this.model.get('time') === 10000) {
+			// this.triggerMethod('scaled');
+			this.triggerMethod('highlight');
+		}
+		if (this.model.get('time') < 4000) {
+			this.triggerMethod('highlight');
 		}
 	},
 	onRender: function() {

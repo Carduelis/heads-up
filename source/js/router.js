@@ -16,9 +16,9 @@ var Router = Marionette.AppRouter.extend({
 		app.rootView.getRegion('footer').empty();
 	},
 	game: function () {
-		if (screenfull.enabled) {
-			screenfull.request();
-		}
+		// if (screenfull.enabled) {
+		// 	screenfull.request();
+		// }
 		app.history.reset();
 		app.timer = new Timer.Entry();
 		app.game = new Game.Entry();

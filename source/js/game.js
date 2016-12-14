@@ -103,6 +103,7 @@ View.Main = Marionette.View.extend({
 		},1500);
 	},
 	onBeforeDestoy: function() {
+		stopVibrate();
 		this.doNotVibrate = true;
 	},
 	onVibra: function() {
