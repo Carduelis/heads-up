@@ -151,147 +151,20 @@
 			</div>
 		</div>
 	</script>
+	<script id="t-dictionary" type="text/template">
+		<div class="card">
+			<h4><%-title%></h4>
+			<p><%-description%></p>
+		</div>
+	</script>
 	<script id="t-welcome" type="text/template">
 		<h2>Heads up is a party-game</h2>
 		<p>Pick a theme and add your friends
-
-		<ul class="themes">
-			<li>
-				<div class="card">
-				<h4>Learn English</h4>
-				<p>Most common words, a list of 3000</p>
-			</li>
-			<li>
-				<div class="card">
-				<h4>Learn English</h4>
-				<p>Great Noun List (4401 words)</p>
-			</li>
-			<li><div class="card">
-				<h4>Test</h4>
-				<p>Under developing</p>
-				</div>
-			</li>
-			<li><div class="card">
-				<h4>Superheroes</h4>
-				<p>Under developing</p>
-				</div>
-			</li>
-			<li><div class="card">
-				<h4>TV shows</h4>
-				<p>Under developing</p>
-				</div>
-			</li>
-			<li><div class="card">
-				<h4>TV shows</h4>
-				<p>Under developing</p>
-				</div>
-			</li>
-			<li><div class="card">
-				<h4>TV shows</h4>
-				<p>Under developing</p>
-				</div>
-			</li>
-			<li><div class="card">
-				<h4>TV shows</h4>
-				<p>Under developing</p>
-				</div>
-			</li>
-			<li><div class="card">
-				<h4>TV shows</h4>
-				<p>Under developing</p>
-				</div>
-			</li>
-			<li><div class="card">
-				<h4>TV shows</h4>
-				<p>Under developing</p>
-				</div>
-			</li>
-			<li><div class="card">
-				<h4>TV shows</h4>
-				<p>Under developing</p>
-				</div>
-			</li>
-			<li><div class="card">
-				<h4>TV shows</h4>
-				<p>Under developing</p>
-				</div>
-			</li>
-			<li><div class="card">
-				<h4>TV shows</h4>
-				<p>Under developing</p>
-				</div>
-			</li>
-			<li><div class="card">
-				<h4>TV shows</h4>
-				<p>Under developing</p>
-				</div>
-			</li>
-			<li><div class="card">
-				<h4>TV shows</h4>
-				<p>Under developing</p>
-				</div>
-			</li>
-			<li><div class="card">
-				<h4>TV shows</h4>
-				<p>Under developing</p>
-				</div>
-			</li>
-			<li><div class="card">
-				<h4>TV shows</h4>
-				<p>Under developing</p>
-				</div>
-			</li>
-			<li><div class="card">
-				<h4>TV shows</h4>
-				<p>Under developing</p>
-				</div>
-			</li>
-			<li><div class="card">
-				<h4>TV shows</h4>
-				<p>Under developing</p>
-				</div>
-			</li>
-			<li><div class="card">
-				<h4>TV shows</h4>
-				<p>Under developing</p>
-				</div>
-			</li>
-			<li><div class="card">
-				<h4>TV shows</h4>
-				<p>Under developing</p>
-				</div>
-			</li>
-			<li><div class="card">
-				<h4>TV shows</h4>
-				<p>Under developing</p>
-				</div>
-			</li>
-			<li><div class="card">
-				<h4>TV shows</h4>
-				<p>Under developing</p>
-				</div>
-			</li>
-			<li><div class="card">
-				<h4>TV shows</h4>
-				<p>Under developing</p>
-				</div>
-			</li>
-			<li><div class="card">
-				<h4>TV shows</h4>
-				<p>Under developing</p>
-				</div>
-			</li>
-			<li><div class="card">
-				<h4>TV shows</h4>
-				<p>Under developing</p>
-				</div>
-			</li>
-			<li><div class="card">
-				<h4>TV shows</h4>
-				<p>Under developing</p>
-				</div>
-			</li>
-		</ul>			
+		<r-dictionary-list></r-dictionary-list>	
+	</script>
+	<script id="t-setup" type="text/template">
+		<r-list></r-list>
+		<button class="btn btn-danger" onclick="localStorage.clear();">Clear settings</button>
 	</script>
 </body>
 </html>

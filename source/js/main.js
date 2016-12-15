@@ -2,6 +2,9 @@ function localSave(key,json) {
 	localStorage.setItem(key, JSON.stringify(json));
 	return true;
 };
+function localHas(key) {
+	return localRead(key) !== null
+}
 function localRead(key) {
 	var json = JSON.parse(localStorage.getItem(key));
 	return json;
@@ -48,6 +51,7 @@ var AcceleratorData = Backbone.Model.extend({
 		}
 	}
 });
+
 var App = Marionette.Application.extend({
 	region: '#app',
 	initialize: function(options) {
@@ -65,7 +69,7 @@ var App = Marionette.Application.extend({
 app = new App();
 app.on('start', (e) => {
 	Backbone.history.start();
-
+	app.dictionary = new Welcome.Data.Dictionary();
 	if (typeof window.DeviceMotionEvent !== 'undefined') {
 		window.ondevicemotion = function(e) {
 			var dataset = _.extend({},e.acceleration);

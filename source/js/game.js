@@ -4,17 +4,38 @@ var Data = {}, View = {};
 
 EntryPoint = Marionette.Object.extend({
 	initialize: function() {
-		this.triggerMethod('get:dictionary');
-	},
-	onGetDictionary: function() {
-		if(localStorage.getItem('dictionary')) {
-			this.triggerMethod('dictionary:stored',localStorage.getItem('dictionary'))
+		this.dictionaryName = app.dictionary.get('name')+'_v'+app.dictionary.get('version');
+		if (localRead('dictionaryName') === this.dictionaryName) {
+			this.triggerMethod('dictionary:stored', localRead('dictionary'));
 		} else {
-			$.get('assets/great_noun_list.json').success(dictionary => {
-				this.triggerMethod('dictionary:stored', dictionary)
-			});
+			this.triggerMethod('load:dictionary');
 		}
 	},
+	onLoadDictionary: function() {
+		console.log('onLoadDictionary');
+		$.get('assets/dictionaries/'+this.dictionaryName+'.json').success(dictionary => {
+			this.triggerMethod('dictionary:stored', dictionary);
+			this.storeDictionary(dictionary);
+		}).error(error => {
+			alert("Sorry, can't reach the dictionary. Try again or pick another one");
+		});
+	},
+	storeDictionary: function(dictionary) {
+		console.log('storeDictionary');
+		localSave('dictionaryName',this.dictionaryName);
+		localSave('dictionary',dictionary);
+	},
+	// onGetDictionary: function() {
+	// 	if(localHas('dictionary')) {
+	// 		this.triggerMethod('dictionary:stored',localRead('dictionary'))
+	// 	} else {
+	// 		$.get('assets/dictionaries/'+dictionaryName+'.json').success(dictionary => {
+	// 			this.triggerMethod('dictionary:stored', dictionary);
+	// 		}).error(error => {
+	// 			alert("Sorry, can't reach the dictionary. Try again or pick another one");
+	// 		});
+	// 	}
+	// },
 	pickWord: function() {
 		// to do 
 		// 1. trim dictionary (amount of words === seconds) 
@@ -31,6 +52,7 @@ EntryPoint = Marionette.Object.extend({
 		return dictionary[wordId]
 	},
 	onDictionaryStored: function(dictionary) {
+		console.log('onDictionaryStored');
 		this.dictionary = dictionary;
 		this.pickedWords = {};	
 		this.triggerMethod('show:word');

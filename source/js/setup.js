@@ -46,7 +46,7 @@ EntryPoint = Marionette.Object.extend({
 				}
 			];
 		}
-		this.view = new View.Settings({
+		this.view = new View.SettingsWrapper({
 			dataset: dataset
 		});
 		app.rootView.getRegion('content').show(this.view);
@@ -69,6 +69,19 @@ Data.Setting = Backbone.Model.extend({
 Data.Settings = Backbone.Collection.extend({
 	model: Data.Setting,
 
+});
+View.SettingsWrapper = Marionette.View.extend({
+	template: '#t-setup',
+	regions: new RegionSetter('list'),
+	initialize: function(options) {
+
+	},
+	onRender: function() {
+		var settingListView = new View.Settings({
+			dataset: this.options.dataset
+		});
+		this.getRegion('list').show(settingListView)
+	}
 });
 
 View.SettingItem = Marionette.View.extend({
