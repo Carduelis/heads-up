@@ -126,9 +126,11 @@ var RootView = Marionette.View.extend({
 		this.model = options.model;
 	},
 	onRender: function () {
-		this.getRegion('statusbar').show(new AcceleratorDebug({
-			model: this.model
-		}));
+		if (localHas('debug')) {
+			this.getRegion('statusbar').show(new AcceleratorDebug({
+				model: this.model
+			}));
+		}
 		this.getRegion('navibar').show(new Navibar.View());
 	}
 });

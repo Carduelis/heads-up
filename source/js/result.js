@@ -29,6 +29,7 @@ View.NoWord = Marionette.View.extend({
 });
 View.Actions = Marionette.View.extend({
 	template: '#t-result-actions',
+	className: 'result-footer',
 	events: {
 		'click [data-action="navigate"]': 'navigate'
 	},
@@ -36,7 +37,7 @@ View.Actions = Marionette.View.extend({
 		var routeName = e.currentTarget.dataset.route;
 		app.router.navigate(routeName,{
 			trigger:true
-		})
+		});
 	},
 });
 View.List = Marionette.CollectionView.extend({

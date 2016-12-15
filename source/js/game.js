@@ -4,7 +4,12 @@ var Data = {}, View = {};
 
 EntryPoint = Marionette.Object.extend({
 	initialize: function() {
-		this.dictionaryName = app.dictionary.get('name')+'_v'+app.dictionary.get('version');
+		try {
+			this.dictionaryName = app.dictionary.get('name')+'_v'+app.dictionary.get('version');
+		} catch(e) {
+			console.error(e);
+			this.dictionaryName = 'default_v0'
+		}
 		if (localRead('dictionaryName') === this.dictionaryName) {
 			this.triggerMethod('dictionary:stored', localRead('dictionary'));
 		} else {
@@ -123,6 +128,24 @@ View.Main = Marionette.View.extend({
 		_.delay(()=>{
 			this.triggerMethod('vibra');
 		},1500);
+		this.triggerMethod('get:info');
+	},
+	onGetInfo: function() {
+		$.get('http://api.pearson.com/v2/dictionaries/ldoce5/entries?headword='+this.model.get('word')).success(response => {
+			this.triggerMethod('render:info',response)
+		});
+	},
+	onRenderInfo : function(response) {
+		if (response.status == 200) {
+			try {
+				
+				this.$el.find('.info').html('may be a <b>'+response.results[0].part_of_speech+'</b>')
+			} catch (e) {
+				this.$el.find('.info').text('not found');
+				console.error(e);
+			}
+		}
+		
 	},
 	onBeforeDestoy: function() {
 		stopVibrate();

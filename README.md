@@ -10,10 +10,11 @@ Features list
 - [ ] Add teams-functionality
 - [ ] Add pause-button and revert a word feature
 - [x] Create manifest.json and icon
-- [ ] Add real dictionaries
+- [x] Add real dictionaries
 - [ ] Add version-controller (clear localStorage, show popup)
 - [ ] Add push-notifications for the new versions
 - [ ] Illustrate by icons
+- [x] Get word's info from external API
 
 Fixes list
 - [x] Fix results issue (results has not been shown after game over)

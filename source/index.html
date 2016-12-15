@@ -59,6 +59,7 @@
 			<button type="button" class="btn btn-super-danger" data-action="pass">Pass <i class="glyphicon glyphicon-remove"></i></button>
 			<div class="word-container">
 				<h1 style="font-size: <%-size%>em"><%-word%></h1>
+				<div class="info"></div>
 			</div>
 			<button type="button" class="btn btn-super-success" data-action="correct">Correct <i class="glyphicon glyphicon-ok"></i></button>
 		</div>
@@ -81,8 +82,9 @@
 		</ul>
 	</script>
 	<script id="t-result-empty" type="text/template">
-		<div class="text-muted">
-			No words
+		<h1 class="sad-smile">:-(</h1>
+		<div class="text-center text-muted">
+			No words here
 		</div>
 	</script>
 	<script id="t-result-word" type="text/template">

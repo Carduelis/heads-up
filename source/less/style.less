@@ -22,6 +22,12 @@ body {
 @n-pad: @pad*5; // navibar
 @f-pad: @pad*5; // footer
 
+.sad-smile {
+	text-align: center;
+	font-size: 10rem;
+	color: @palette-Teal-200;
+}
+
 .text-danger {
 	color: @palette-Red-700;	
 }
@@ -111,7 +117,6 @@ a {
 	z-index: 1999;
 	// opacity: 0;
 	left: 0;
-	bottom: 0;
 	// background-color: rgba(255, 255, 255, 0.1); 
 	font-size: .75em;
 	padding: @pad/2;
@@ -360,6 +365,15 @@ html, body {
 		margin-right: @pad/2;
 	}
 }
+.result-footer {
+	padding: @pad;
+	position: absolute;
+	right: 0;
+	left: 0;
+	color: @color-back;
+	background-color: @palette-Teal-500;
+	bottom: 0;
+}
 .game-content {
 	text-align: center;
 	display: flex;
@@ -410,6 +424,16 @@ html, body {
 		overflow-y: auto;
 		// overflow-x: hidden;
 		min-width: @pad*20;
+		position: relative;
+		.info {
+			position: absolute;
+			font-style: italic;
+			bottom: 0;
+			left: 0;
+			line-height: @pad*3;
+			right: 0;
+			text-align: center;
+		}
 	}
 	h1 {
 		text-align: center;

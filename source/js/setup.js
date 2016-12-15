@@ -72,6 +72,7 @@ Data.Settings = Backbone.Collection.extend({
 });
 View.SettingsWrapper = Marionette.View.extend({
 	template: '#t-setup',
+	className: 'container navibar-pad',
 	regions: new RegionSetter('list'),
 	initialize: function(options) {
 
