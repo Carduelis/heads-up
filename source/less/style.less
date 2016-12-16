@@ -12,6 +12,13 @@ html {
 		font-size: 16px;
 	}
 }
+
+html, body {
+	background-color: @color-back;
+	height: 100%;
+	overflow: hidden;
+}
+
 body {
 	font-size: inherit;
 }
@@ -99,6 +106,14 @@ h1,h2,h3,h4,h5,h6 {
 	color: @palette-Teal-500;
 }
 
+.sound-toggler {
+	position: fixed;
+	left: @pad;
+	bottom: @pad;
+	color: @palette-Teal-200;
+	z-index: 1002;
+	font-size: @pad*2;
+}
 a {
 	color: @palette-Green-A700;
 	&:hover {
@@ -111,6 +126,9 @@ a {
 	li {
 		list-style-type: none;
 	}
+}
+.welcome-header {
+	padding: @pad*2 0;
 }
 .acc-debug {
 	position: fixed;
@@ -136,13 +154,6 @@ a {
 		}
 	}
 }
-
-html, body {
-	background-color: @color-back;
-	height: 100%;
-	overflow: hidden;
-}
-
 .timer {
 	position: fixed;
 	bottom: 0;

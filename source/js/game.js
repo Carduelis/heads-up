@@ -4,12 +4,7 @@ var Data = {}, View = {};
 
 EntryPoint = Marionette.Object.extend({
 	initialize: function() {
-		try {
-			this.dictionaryName = app.dictionary.get('name')+'_v'+app.dictionary.get('version');
-		} catch(e) {
-			console.error(e);
-			this.dictionaryName = 'default_v0'
-		}
+		this.dictionaryName = Dictionary.choosed.getName();
 		if (localRead('dictionaryName') === this.dictionaryName) {
 			this.triggerMethod('dictionary:stored', localRead('dictionary'));
 		} else {
@@ -30,17 +25,6 @@ EntryPoint = Marionette.Object.extend({
 		localSave('dictionaryName',this.dictionaryName);
 		localSave('dictionary',dictionary);
 	},
-	// onGetDictionary: function() {
-	// 	if(localHas('dictionary')) {
-	// 		this.triggerMethod('dictionary:stored',localRead('dictionary'))
-	// 	} else {
-	// 		$.get('assets/dictionaries/'+dictionaryName+'.json').success(dictionary => {
-	// 			this.triggerMethod('dictionary:stored', dictionary);
-	// 		}).error(error => {
-	// 			alert("Sorry, can't reach the dictionary. Try again or pick another one");
-	// 		});
-	// 	}
-	// },
 	pickWord: function() {
 		// to do 
 		// 1. trim dictionary (amount of words === seconds) 
@@ -138,7 +122,6 @@ View.Main = Marionette.View.extend({
 	onRenderInfo : function(response) {
 		if (response.status == 200) {
 			try {
-				
 				this.$el.find('.info').html('may be a <b>'+response.results[0].part_of_speech+'</b>')
 			} catch (e) {
 				this.$el.find('.info').text('not found');

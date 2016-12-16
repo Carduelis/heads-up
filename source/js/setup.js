@@ -2,53 +2,55 @@
 var Data = {}, View = {};
 
 
+var dataset = [
+	{
+		title: 'Количество команд',
+		type: 'number',
+		name: 'teams',
+		disabledState: 'disabled',
+		value: 2
+	},{
+		title: 'Время на раунд',
+		type: 'number',
+		value: 4,
+		name: 'time',
+		disabledState: false,
+		measure: 'мин'
+	},{
+		title: 'Звук',
+		type: 'checkbox',
+		value: true,
+		disabledState: false,
+		name: 'sound',
+	},{
+		title: 'Категория',
+		disabledState: 'disabled',
+		name: 'category',
+		type: 'select',
+		value: 1,
+		options: [
+			{
+				id: 1,
+				name: 'Общие слова'
+			},{
+				id: 2,
+				name: 'Музыкальные группы и исполнители'
+			},{
+				id: 3,
+				name: 'Продукты питания'
+			},{
+				id: 4,
+				name: 'Гаджеты'
+			}
+		]
+	}
+];
+if (!localHas('settings')) {
+	localSave('dataset',dataset);
+}
 EntryPoint = Marionette.Object.extend({
 	initialize: function() {
-		var dataset = [];
-		if (localStorage.getItem('settings')) {
-			dataset = localRead('settings');
-		} else {
-			dataset = [
-				{
-					title: 'Количество команд',
-					type: 'number',
-					name: 'teams',
-					disabledState: 'disabled',
-					value: 2
-				},{
-					title: 'Время на раунд',
-					type: 'number',
-					value: 4,
-					name: 'time',
-					disabledState: false,
-					measure: 'мин'
-				},{
-					title: 'Категория',
-					disableState: 'disabled',
-					name: 'category',
-					type: 'select',
-					value: 1,
-					options: [
-						{
-							id: 1,
-							name: 'Общие слова'
-						},{
-							id: 2,
-							name: 'Музыкальные группы и исполнители'
-						},{
-							id: 3,
-							name: 'Продукты питания'
-						},{
-							id: 4,
-							name: 'Гаджеты'
-						}
-					]
-				}
-			];
-		}
-		this.view = new View.SettingsWrapper({
-			dataset: dataset
-		});
+		this.view = new View.SettingsWrapper();
 		app.rootView.getRegion('content').show(this.view);
 	},
 });
@@ -68,18 +70,22 @@ Data.Setting = Backbone.Model.extend({
 });
 Data.Settings = Backbone.Collection.extend({
 	model: Data.Setting,
-
 });
 View.SettingsWrapper = Marionette.View.extend({
 	template: '#t-setup',
 	className: 'container navibar-pad',
 	regions: new RegionSetter('list'),
 	initialize: function(options) {
-
+		lsChannel.on('sound:save:success', this.render);
+		
+	},
+	onDestroy: function() {
+		console.warn('kek');
+		lsChannel.off('sound:save:success');
 	},
 	onRender: function() {
 		var settingListView = new View.Settings({
-			dataset: this.options.dataset
+			dataset: localRead('settings')
 		});
 		this.getRegion('list').show(settingListView)
 	}
@@ -89,10 +95,15 @@ View.SettingItem = Marionette.View.extend({
 	template: '#t-setting-item',
 	className: 'list-group-item list-settings-item',
 	events: {
-		'input .form-control': 'onInput'
+		'input .form-control': 'onInput',
+		'change .form-control': 'onChange',
 	},
 	onInput: function(e) {
 		this.model.set('value',e.currentTarget.value);
+	},
+	onChange: function(e) {
+		this.model.set('value',e.currentTarget.checked);
+		lsChannel.trigger('setup:save:success',this.model.attributes);
 	}
 });
 View.Settings = Marionette.CollectionView.extend({

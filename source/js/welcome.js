@@ -14,17 +14,6 @@ EntryPoint = Marionette.View.extend({
 	}
 });
 
-Data.Dictionary = Backbone.Model.extend({
-	defaults: {
-		title: 'Default dictionary',
-		name: 'default',
-		version: 0,
-		description: 'Contains different words'
-	}
-});
-Data.Dictionaries = Backbone.Collection.extend({
-	model: Data.Dictionary
-});
 
 View.Dictionary = Marionette.View.extend({
 	tagName: 'li',
@@ -34,7 +23,7 @@ View.Dictionary = Marionette.View.extend({
 	},
 	onBeforeStartGame: function() {
 
-		app.dictionary = this.model;
+		Dictionary.choosed = this.model;
 		this.triggerMethod('start:game');
 	},
 	onStartGame: function() {
@@ -48,7 +37,7 @@ View.Dictionaries = Marionette.CollectionView.extend({
 	className: 'themes',
 	tagName: 'ul',
 	initialize: function(options) {
-		this.collection = new Data.Dictionaries([
+		this.collection = new Dictionary.Collection([
 			{
 				id: 1,
 				title: "Anna's dictionary",

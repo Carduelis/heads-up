@@ -1,20 +1,3 @@
-function localSave(key,json) {
-	localStorage.setItem(key, JSON.stringify(json));
-	return true;
-};
-function localHas(key) {
-	return localRead(key) !== null
-}
-function localRead(key) {
-	var json = JSON.parse(localStorage.getItem(key));
-	return json;
-};
-function playSound(id) {
-	var sound = $('#audio-'+id).get(0);
-	sound.pause();
-	sound.currentTime = 0;
-	sound.play();
-}
 var RegionSetter = function() {
 	this.arguments = arguments;
 	if (this.arguments.length == 1 && _.isArray(this.arguments[0])) {
@@ -69,7 +52,6 @@ var App = Marionette.Application.extend({
 app = new App();
 app.on('start', (e) => {
 	Backbone.history.start();
-	app.dictionary = new Welcome.Data.Dictionary();
 	if (typeof window.DeviceMotionEvent !== 'undefined') {
 		window.ondevicemotion = function(e) {
 			var dataset = _.extend({},e.acceleration);
@@ -121,7 +103,7 @@ var AcceleratorDebug = Marionette.View.extend({
 var RootView = Marionette.View.extend({
 	template: '#t-root',
 	className: 'root',
-	regions: new RegionSetter('navibar','statusbar','content','footer'),
+	regions: new RegionSetter('navibar','statusbar','content','footer','sound'),
 	initialize: function(options) {
 		this.model = options.model;
 	},
@@ -132,6 +114,7 @@ var RootView = Marionette.View.extend({
 			}));
 		}
 		this.getRegion('navibar').show(new Navibar.View());
+		this.getRegion('sound').show(new Sound.ToggleView());
 	}
 });
 

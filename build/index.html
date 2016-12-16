@@ -15,6 +15,10 @@
 
 	<script type="text/javascript" src="js/vibration.js"></script>
 
+	<script type="text/javascript" src="js/localstorage.js"></script>
+	<script type="text/javascript" src="js/sound.js"></script>
+	<script type="text/javascript" src="js/dictionary.js"></script>
+
 	<script type="text/javascript" src="js/main.js"></script>
 	<script type="text/javascript" src="js/router.js"></script>
 	<script type="text/javascript" src="js/game.js"></script>
@@ -53,6 +57,7 @@
 		<r-statusbar></r-statusbar>
 		<r-content></r-content>
 		<r-footer></r-footer>
+		<r-sound></r-sound>
 	</script>
 	<script id="t-main" type="text/template">
 		<div class="game">
@@ -117,7 +122,7 @@
 			<% } %>
 			</select>
 		<% } else { %>
-			<input class="form-control" type="<%-type%>" value="<%-value%>" <%-disabledState%>>
+			<input class="form-control" type="<%-type%>" value="<%-value%>" <%-disabledState%> <% if (value === true) { %>checked<% } %> >
 			<p class="measure"><%-measure%>
 		<% } %>
 		</div>
@@ -160,13 +165,22 @@
 		</div>
 	</script>
 	<script id="t-welcome" type="text/template">
+		<header class="welcome-header">
 		<h2>Heads up is a party-game</h2>
-		<p>Pick a theme and add your friends
+		<p>Pick a theme and add your friends</p>
+		</header>
 		<r-dictionary-list></r-dictionary-list>	
 	</script>
 	<script id="t-setup" type="text/template">
 		<r-list></r-list>
 		<button class="btn btn-danger" onclick="localStorage.clear();">Clear settings</button>
+	</script>
+	<script id="t-sound-toggler" type="text/template">
+		<% if (value) { %>
+			<i class="glyphicon glyphicon-volume-up"></i>
+		<% } else { %>
+			<i class="glyphicon glyphicon-volume-off"></i>
+		<% } %>
 	</script>
 </body>
 </html>
