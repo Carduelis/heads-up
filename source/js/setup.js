@@ -46,7 +46,7 @@ var dataset = [
 	}
 ];
 if (!localHas('settings')) {
-	localSave('dataset',dataset);
+	localSave('settings',dataset);
 }
 EntryPoint = Marionette.Object.extend({
 	initialize: function() {

@@ -128,11 +128,19 @@
 		</div>
 	</script>
 	<script id="t-timer" type="text/template">
-		<button class="btn btn-default" disabled><i class="glyphicon glyphicon-pause"></i></button>
+		<button class="btn btn-default" data-action="pause">
+			<% if (isPause) { %>
+				<i class="glyphicon glyphicon-play"></i>
+			<% } else { %>
+				<i class="glyphicon glyphicon-pause"></i>
+			<% } %>
+		</button>
 		<div class="clock">
 			<span><%-minutes%></span>:<span><%-seconds%></span>
 		</div>
-		<button class="btn btn-default" disabled><i class="glyphicon glyphicon-stop"></i></button>
+		<button class="btn btn-default" disabled data-action="rewind">
+			<i class="glyphicon glyphicon-stop"></i>
+		</button>
 	</script>
 	<script id="t-navigate-bar" type="text/template">
 		<div class="simple-view">

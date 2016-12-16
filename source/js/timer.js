@@ -22,21 +22,24 @@ var Timer = Marionette.Object.extend({
 		this.pause = false;
 		this.triggerMethod('tick');
 	},
-	onAfterTick: function () {
+	onAfterTick: function() {
+		//
+	},
+	onDestroy : function() {
+		this.pause = true;
 	},
 	onStop: function() {
+		console.log('stop')
 		this.model.set('time',this.model.get('startTime'));
 		this.pause = true;
 		var time = this.model.get('time');
-	},
-	onEnd: function() {
-		// first show "time is up"-notify
 	},
 	onPause: function() {
 		this.pause = true;
 	},
 	onPlay: function() {
 		this.pause = false;
+		this.triggerMethod('tick');
 	},
 	onTick: function(ms) {
 		this.triggerMethod('before:tick');
@@ -57,12 +60,8 @@ var Timer = Marionette.Object.extend({
 })
 var EntryPoint = Marionette.Object.extend({
 	initialize: function() {
-		this.timer = new Timer({
-			tick: 1000
-		});
-		this.view = new View.Timer({
-			model: this.timer.model
-		});
+
+		this.view = new View.Timer();
 		app.rootView.getRegion('footer').show(this.view);
 	},
 });
@@ -72,10 +71,27 @@ View.Timer = Marionette.View.extend({
 	template: '#t-timer',
 	className: 'timer',
 	initialize: function(options) {
-
+		this.timer = new Timer({
+			tick: 1000
+		});
+		this.model = this.timer.model
 	},
 	modelEvents: {
 		'change'	: 'render',
+	},
+	triggers: {
+		'click [data-action="pause"]' : 'pause'
+	},
+	onPause: function() {
+		console.log(this.timer.pause);
+		if (this.timer.pause) {
+			this.timer.triggerMethod('play');
+		} else {
+			this.timer.triggerMethod('pause');
+		}
+	},
+	onDestroy: function() {
+		this.timer.triggerMethod('destroy');
 	},
 	templateContext: function() {
 		var time = this.model.get('time');
@@ -89,7 +105,8 @@ View.Timer = Marionette.View.extend({
 		}
 		return 	{
 			'minutes':minutes,
-			'seconds':seconds
+			'seconds':seconds,
+			'isPause': this.timer.pause 
 		}
 	},
 	onScaled: function() {

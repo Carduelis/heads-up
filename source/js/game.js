@@ -130,9 +130,10 @@ View.Main = Marionette.View.extend({
 		}
 		
 	},
-	onBeforeDestoy: function() {
-		stopVibrate();
+	onDestroy: function() {
+		this.unbindEvents(app.model,this.accelerometerModelEvents);
 		this.doNotVibrate = true;
+		stopVibrate();
 	},
 	onVibra: function() {
 		stopVibrate();

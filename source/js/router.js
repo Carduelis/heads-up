@@ -28,6 +28,8 @@ var Router = Marionette.AppRouter.extend({
 	},
 	setup: function() {
 		new Setup.Entry();
+		app.rootView.getRegion('footer').empty();
+
 	},
 	showWord: function(dataset) {
 	},
