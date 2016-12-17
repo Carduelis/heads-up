@@ -4,6 +4,8 @@ var Router = Marionette.AppRouter.extend({
 		"welcome" : 			"welcome",
 		"setup":				"setup",
 		"game":				"game",
+		"gamedebug":				"gamedebug",
+		"acc":				"accelerometer",
 		"result": "result",
 		"results": "result",
 		"reports/:id":			"report",
@@ -23,8 +25,21 @@ var Router = Marionette.AppRouter.extend({
 		app.timer = new Timer.Entry();
 		app.game = new Game.Entry();
 	},
+	gamedebug: function () {
+		// if (screenfull.enabled) {
+		// 	screenfull.request();
+		// }
+		app.history.reset();
+		app.timer = new Timer.Entry();
+		app.game = new Game.Entry();
+		app.acc = new Accelerometer.Entry();
+	},
 	result: function () {
 		new Result.Entry();
+	},
+	accelerometer: function () {
+		console.log('kek')
+		app.acc = new Accelerometer.Entry();
 	},
 	setup: function() {
 		new Setup.Entry();

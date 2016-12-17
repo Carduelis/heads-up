@@ -127,8 +127,7 @@ View.Main = Marionette.View.extend({
 				this.$el.find('.info').text('not found');
 				console.error(e);
 			}
-		}
-		
+		}	
 	},
 	onDestroy: function() {
 		this.unbindEvents(app.model,this.accelerometerModelEvents);
@@ -182,8 +181,10 @@ View.Main = Marionette.View.extend({
 			warningVertical	 : Math.abs(tilt) < 6 && Math.abs(tilt) > 3,
 			wordCorrect		 : tilt < -6 && accelerateTilt > 0.8,
 			wordIncorrect	 : tilt > 6 && accelerateTilt < -0.8,
+			wordCorrect		 : tilt < -6 && accelerateTilt < -4,
+			wordIncorrect	 : tilt > 6 && accelerateTilt > 4,
 		};
-
+		$('h2[data-action="navigate"]').html('<span class="tilt">'+tilt.toFixed(2)+'</span><span class="tilt-acc">'+accelerateTilt.toFixed(2)+'</span>')
 		if (conditions.vertical) {
 			this.triggerMethod('normal:state')
 		}

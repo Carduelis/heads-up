@@ -46,6 +46,13 @@
 	<audio id="audio-wrong" preload>
 		<source src="assets/sounds/wrong.mp3" type="audio/mpeg">
 	</audio>
+	<script id="t-accelerometer" type="text/template">
+		<div id="<%-chartContainerId%>" style="height: 100%; width:100%;"></div>
+	</script>
+	<script id="t-accelerometer-holder" type="text/template">
+		<r-gravity></r-gravity>
+		<r-source></r-source>
+	</script>
 	<section id="app">
 		loading...
 	</section>
@@ -56,6 +63,7 @@
 		<r-navibar></r-navibar>
 		<r-statusbar></r-statusbar>
 		<r-content></r-content>
+		<r-test></r-test>
 		<r-footer></r-footer>
 		<r-sound></r-sound>
 	</script>

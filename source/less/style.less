@@ -24,7 +24,20 @@ html, body {
 	height: 100%;
 	overflow: hidden;
 }
-
+.accelerometer-holder {
+	height: 100%;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 0;
+	width: 100%;
+	padding-top: @pad*7;
+}
+.accelerometer-chart {
+	height: 60%;
+	margin: -20px 0;
+}
 body {
 	font-size: inherit;
 }
@@ -391,9 +404,17 @@ a {
 	background-color: @palette-Teal-500;
 	bottom: 0;
 }
+.tilt,
+.tilt-acc {
+	display: inline-block;
+	text-align: right;
+	width: @pad*5;
+}
 .game-content {
 	text-align: center;
 	display: flex;
+	position: relative;
+	z-index: 2;
 	height: 100%;
 	align-items: center;
 	padding-top: @n-pad;
