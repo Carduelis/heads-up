@@ -136,7 +136,7 @@
 		</div>
 	</script>
 	<script id="t-timer" type="text/template">
-		<button class="btn btn-default" data-action="pause">
+		<button class="btn btn-bordered-primary" data-action="pause">
 			<% if (isPause) { %>
 				<i class="glyphicon glyphicon-play"></i>
 			<% } else { %>
@@ -146,7 +146,7 @@
 		<div class="clock">
 			<span><%-minutes%></span>:<span><%-seconds%></span>
 		</div>
-		<button class="btn btn-default" disabled data-action="rewind">
+		<button class="btn btn-bordered-primary" disabled data-action="rewind">
 			<i class="glyphicon glyphicon-stop"></i>
 		</button>
 	</script>
@@ -178,6 +178,17 @@
 		<div class="card">
 			<h4><%-title%></h4>
 			<p><%-description%></p>
+			<span class="complexity">
+			<% for (var i = 5; i > 0; i--) { %>
+				<% if (i > complexity) { %>
+					<span class="bit bit-ok"></span>
+				<% } else { %>
+					<span class="bit"></span>
+				<% } %>
+			<% } %>
+			</span>
+			<span class="language"><%-language%></span>
+			<div class="ripple"></div>
 		</div>
 	</script>
 	<script id="t-welcome" type="text/template">

@@ -6,19 +6,24 @@ Features list
 - [x] Adapt for horizontal mode
 - [x] Adapt full-screen mode
 - [x] Add sounds
-- [ ] Sound manager
+- [x] Sound manager
 - [ ] Add teams-functionality
-- [ ] Add pause-button and revert a word feature
+- [x] Add pause-button
 - [x] Create manifest.json and icon
 - [x] Add real dictionaries
 - [ ] Add version-controller (clear localStorage, show popup)
 - [ ] Add push-notifications for the new versions
 - [ ] Illustrate by icons
+- [ ] Vibro + Sound when game starts
+- [ ] Vibro + Sound when game ends
+- [ ] Last word should be shown after timer's ending
+- [ ] Result-screen. Allow swapping correct/pass-state on words
 - [x] Get word's info from external API
 
 Fixes list
 - [x] Fix results issue (results has not been shown after game over)
 - [x] Rewrite Timer-object
+- [ ] Don't accept words while timer is paused
 - [ ] Fix navigation-bar states
 - [x] Fix accelerometer issues [stage-0]
 - [x] Test accelerometer on different devices

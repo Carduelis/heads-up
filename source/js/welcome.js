@@ -18,11 +18,31 @@ EntryPoint = Marionette.View.extend({
 View.Dictionary = Marionette.View.extend({
 	tagName: 'li',
 	template: '#t-dictionary',
+	ui: {
+		'card' : '.card',
+		'ripple' : '.ripple'
+	},
+	events: {
+		'mousedown @ui.card' : 'animate',
+	},
 	triggers: {
-		'click' : 'before:start:game'
+		// 'click' : 'before:start:game',
+	},
+	animate: function(e) {
+		var $card = this.getUI('card');
+		var $ripple = this.getUI('ripple');
+		$ripple.removeClass("animate");
+		var x = parseInt(e.pageX - $card.offset().left) - ($ripple.width() / 2);
+		var y = parseInt(e.pageY - $card.offset().top) - ($ripple.height() / 2);
+		$ripple.css({
+			top: y,
+			left: x
+		}).addClass("animate");
+		_.delay(()=>{
+			this.triggerMethod('before:start:game')
+		},300)
 	},
 	onBeforeStartGame: function() {
-
 		Dictionary.choosed = this.model;
 		this.triggerMethod('start:game');
 	},
@@ -39,19 +59,53 @@ View.Dictionaries = Marionette.CollectionView.extend({
 	initialize: function(options) {
 		this.collection = new Dictionary.Collection([
 			{
-				id: 1,
 				title: "Anna's dictionary",
 				name: 'anna',
+				language: 'en',
+				complexity: 3,
 				version: 0,
 				description: 'IELST list'
 			},{
-				id: 2,
 				title: 'The Great Noun List',
 				name: 'great_noun_list',
+				language: 'en',
+				complexity: 5,
 				version: 0,
-				description: '4401 English nouns'
+				description: '4401 English nouns. Here words of varying difficulty'
 			},{
-				id: 3,
+				title: 'Default dictionary',
+				name: 'default',
+				language: 'en',
+				version: 0,
+				description: 'Contains different words'
+			},{
+				title: "Shlyapa's Eng",
+				name: 'shlyapa_low',
+				language: 'en',
+				complexity: 1,
+				version: 0,
+				description: 'Low-level words from shlyapa-game.com'
+			},{
+				title: "Shlyapa's Eng",
+				name: 'shlyapa_mid',
+				language: 'en',
+				complexity: 3,
+				version: 0,
+				description: 'Mid-level words from shlyapa-game.com'
+			},{
+				title: "Shlyapa's Eng",
+				name: 'shlyapa_hard',
+				language: 'en',
+				complexity: 5,
+				version: 0,
+				description: 'Hard words from shlyapa-game.com'
+			},{
+				title: "Легкие слова из Шляпы",
+				name: 'shlyapa_low',
+				language: 'ru',
+				complexity: 1,
+				version: 0,
+				description: 'Легкие слова с shlyapa-game.com'
 			}
 		])
 	}
