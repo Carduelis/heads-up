@@ -96,9 +96,10 @@ View.SettingItem = Marionette.View.extend({
 	className: 'list-group-item list-settings-item',
 	events: {
 		'input .form-control': 'onInput',
-		'change .form-control': 'onChange',
+		'change .form-control[type="checkbox"]': 'onChange',
 	},
 	onInput: function(e) {
+		console.log(e.currentTarget.value);
 		this.model.set('value',e.currentTarget.value);
 	},
 	onChange: function(e) {

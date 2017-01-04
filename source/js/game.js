@@ -61,13 +61,10 @@ EntryPoint = Marionette.Object.extend({
 		'next'		:	'onNext' 	
 	},
 	onPassWord: function(view) {
-
-		console.log(view);
 		view.model.set('guessed',false);
 		app.history.push(view.model);
 	},
 	onCorrectWord: function(view) {
-		console.log(view);
 		view.model.set('guessed',true);
 		app.history.push(view.model);
 	},
@@ -105,15 +102,57 @@ View.Main = Marionette.View.extend({
 	template: '#t-main',
 	className: 'game-content',
 	initialize: function(options) {
+		var defaultSettings = {
+			// accLog: [],
+			delay: 200,
+			accZ: 0,
+			accSum41: 0,
+			accSum41Start: 0,
+			accSum41StartValue: 0,
+			accGravityZ: 0,
+			accGravityZHistory: {},
+			accGravityZAverage: 0,
+			accTicks: 0,
+		}
+		_.extend(this, defaultSettings);
 		this.model = new Data.Main(options.dataset);
 		_.delay(()=>{
 			this.bindEvents(app.model,this.accelerometerModelEvents);
-		},500);
+		},300);
 		_.delay(()=>{
 			this.triggerMethod('vibra');
-		},1500);
+		},1000);
 		this.triggerMethod('get:info');
 	},
+	_calculateAccelerometerData: function(model){
+		var ts = new Date().getTime();
+		this.accGravityZ = model.get('gravity').z;
+		this.accZ = model.get('z');
+		// this.accLog.push({
+		// 	ts: ts,
+		// 	z: this.accZ,
+		// 	gZ: this.accGravityZ
+		// });
+		if (this.accTicks === 0) {
+			this.accSum41Start = ts;
+		};
+		this.accGravityZAverage = (this.accGravityZAverage*this.accTicks+this.accGravityZ)/(this.accTicks+1)
+	// start
+		this.accTicks++;
+		// прибавляем текущее значение
+		this.accSum41 += this.accGravityZ;
+		// вычитаем значение на начало периода
+		this.accSum41 -= this.accSum41StartValue;
+		if (ts - this.accSum41Start > this.delay) {
+			// сбрасываем стартовое время тика
+			this.accTicks = 0;
+			this.accSum41Start = ts;
+			// сбрасываем стартовое значение
+			this.accSum41StartValue = this.accGravityZ;
+		}
+	},
+
+
 	onGetInfo: function() {
 		$.get('http://api.pearson.com/v2/dictionaries/ldoce5/entries?headword='+this.model.get('word')).success(response => {
 			this.triggerMethod('render:info',response)
@@ -173,34 +212,52 @@ View.Main = Marionette.View.extend({
 		'click [data-action="correct"]': 'correct',
 		'click [data-action="pass"]': 'pass',
 	},
+	onTriggered: function () {
+		this.triggered = true;
+		_.delay(()=>{
+			if (this.triggered == true) {
+				if (this.accGravityZAverage > 0) {
+					this.triggerMethod('normal:state');
+					this.triggerMethod('pass',this);
+				} else {
+					this.triggerMethod('normal:state');
+					this.triggerMethod('correct',this);
+				}
+			}
+		}, this.delay);
+	},
 	onGravityChange: function(model) {
+		this._calculateAccelerometerData(model);
 		var tilt = model.get('gravity').z;
 		var accelerateTilt = model.get('z');
 		var conditions = {
 			vertical		 : Math.abs(tilt) < 3,
 			warningVertical	 : Math.abs(tilt) < 6 && Math.abs(tilt) > 3,
+			// BEGIN not in use
 			wordCorrect		 : tilt < -6 && accelerateTilt > 0.8,
 			wordIncorrect	 : tilt > 6 && accelerateTilt < -0.8,
 			wordCorrect		 : tilt < -6 && accelerateTilt < -4,
 			wordIncorrect	 : tilt > 6 && accelerateTilt > 4,
+			// END not in use
+			wordTrigger			: Math.abs(tilt) > 6 && Math.abs(accelerateTilt) > 3
 		};
-		$('h2[data-action="navigate"]').html('<span class="tilt">'+tilt.toFixed(2)+'</span><span class="tilt-acc">'+accelerateTilt.toFixed(2)+'</span>')
 		if (conditions.vertical) {
 			this.triggerMethod('normal:state')
 		}
-		if (conditions.wordCorrect) {
+		if (app.timer.view.timer.pause !== true) {
+			if (conditions.wordTrigger) {
+				this.triggerMethod('triggered');
+			}
+			if (conditions.warningVertical) {
+				this.triggerMethod('warning:state', tilt);
+			}
+		} else {
 			this.triggerMethod('normal:state');
-			this.triggerMethod('correct',this);
 		}
-		if (conditions.wordIncorrect) {
-			this.triggerMethod('normal:state');
-			this.triggerMethod('pass',this);
-		}
-		if (conditions.warningVertical) {
-			this.triggerMethod('warning:state', tilt);
-		}
+		
 	},
 	onNormalState: function() {
+		this.triggered = false;
 		this.$el.removeClass('warning');
 		console.log('normal:state')
 		stopVibrate();
@@ -226,11 +283,6 @@ View.Main = Marionette.View.extend({
 		this.doNotVibrate = true;
 	},
 	onPass: function() {
-		// stopVibrate();
-		// startVibrate(200);
-		// _.delay(()=>{
-		// 	startVibrate(100);
-		// },100)
 		playSound('wrong');
 		this.$el.addClass('pass');
 		this.triggerMethod('disable:guessing');
@@ -243,15 +295,9 @@ View.Main = Marionette.View.extend({
 		prevWordModel = app.history.last()
 	},
 	onCorrect: function() {
-		// stopVibrate();
-		// startVibrate(100);
-		// _.delay(()=>{
-		// 	startVibrate(200);
-		// },100)
 		playSound('correct');
 		this.$el.addClass('correct');
 		this.triggerMethod('disable:guessing');
-
 		this.triggerMethod('start:swipe:animation');
 	},
 })
@@ -262,4 +308,4 @@ window.Game = {
 	Entry: EntryPoint
 }
 
-}());
+}());  
