@@ -15,16 +15,21 @@ EntryPoint = Marionette.Object.extend({
 });
 View.Word = Marionette.View.extend({
 	template: '#t-result-word',
+	triggers: {
+		'click' : 'change'
+	},
 	templateContext: function() {
-
-		
+	
+	},
+	onChange: function () {
+		this.model.set('guessed',!this.model.get('guessed'));
+		this.render();
 	}
 });
 View.NoWord = Marionette.View.extend({
 	template: '#t-result-empty',
 	templateContext: function() {
 
-		
 	}
 });
 View.Actions = Marionette.View.extend({

@@ -59,12 +59,12 @@ View.Dictionaries = Marionette.CollectionView.extend({
 	initialize: function(options) {
 		this.collection = new Dictionary.Collection([
 			{
-				title: "Anna's dictionary",
-				name: 'anna',
-				language: 'en',
-				complexity: 3,
+				title: "Легкие слова из Шляпы",
+				name: 'shlyapa_low',
+				language: 'ru',
+				complexity: 1,
 				version: 0,
-				description: 'IELST list'
+				description: 'Легкие слова с shlyapa-game.com'
 			},{
 				title: 'The Great Noun List',
 				name: 'great_noun_list',
@@ -93,19 +93,19 @@ View.Dictionaries = Marionette.CollectionView.extend({
 				version: 0,
 				description: 'Mid-level words from shlyapa-game.com'
 			},{
+				title: "Anna's dictionary",
+				name: 'anna',
+				language: 'en',
+				complexity: 3,
+				version: 0,
+				description: 'IELST list'
+			},{
 				title: "Shlyapa's Eng",
 				name: 'shlyapa_hard',
 				language: 'en',
 				complexity: 5,
 				version: 0,
 				description: 'Hard words from shlyapa-game.com'
-			},{
-				title: "Легкие слова из Шляпы",
-				name: 'shlyapa_low',
-				language: 'ru',
-				complexity: 1,
-				version: 0,
-				description: 'Легкие слова с shlyapa-game.com'
 			}
 		])
 	}

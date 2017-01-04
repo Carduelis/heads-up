@@ -12,7 +12,7 @@ var dataset = [
 	},{
 		title: 'Время на раунд',
 		type: 'number',
-		value: 4,
+		value: 1,
 		name: 'time',
 		disabledState: false,
 		measure: 'мин'

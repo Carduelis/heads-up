@@ -460,6 +460,7 @@ a {
 	padding-bottom: @f-pad;
 	position: relative;
 	-webkit-overflow-scrolling: touch;
+
 	// &::before, &::after {
 	// 	content: '';
 	// 	position: fixed;
@@ -482,6 +483,22 @@ a {
 		margin: @pad 0;
 		> div {
 			.ellipsis;
+		}
+		position: relative;
+		label {
+			position: absolute;
+			right: @pad;
+			top: @pad/2;
+			display: block;
+			bottom: @pad/2;
+			padding: 0 @pad/2;
+			border-radius: @pad/2;
+			display: flex;
+			align-items: center;
+			background-color: @palette-Orange-100;
+			input {
+				margin: 0;
+			}
 		}
 	}
 	i {

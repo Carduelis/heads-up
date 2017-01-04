@@ -179,8 +179,8 @@
 			<h4><%-title%></h4>
 			<p><%-description%></p>
 			<span class="complexity">
-			<% for (var i = 5; i > 0; i--) { %>
-				<% if (i > complexity) { %>
+			<% for (var i = 0; i < 6; i++) { %>
+				<% if (i < complexity) { %>
 					<span class="bit bit-ok"></span>
 				<% } else { %>
 					<span class="bit"></span>

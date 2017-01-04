@@ -154,7 +154,7 @@ View.Main = Marionette.View.extend({
 
 
 	onGetInfo: function() {
-		$.get('http://api.pearson.com/v2/dictionaries/ldoce5/entries?headword='+this.model.get('word')).success(response => {
+		$.get('//api.pearson.com/v2/dictionaries/ldoce5/entries?headword='+this.model.get('word')).success(response => {
 			this.triggerMethod('render:info',response)
 		});
 	},
@@ -239,7 +239,7 @@ View.Main = Marionette.View.extend({
 			wordCorrect		 : tilt < -6 && accelerateTilt < -4,
 			wordIncorrect	 : tilt > 6 && accelerateTilt > 4,
 			// END not in use
-			wordTrigger			: Math.abs(tilt) > 6 && Math.abs(accelerateTilt) > 3
+			wordTrigger			: Math.abs(tilt) > 5 && Math.abs(accelerateTilt) > 2
 		};
 		if (conditions.vertical) {
 			this.triggerMethod('normal:state')
@@ -254,7 +254,7 @@ View.Main = Marionette.View.extend({
 		} else {
 			this.triggerMethod('normal:state');
 		}
-		
+
 	},
 	onNormalState: function() {
 		this.triggered = false;
