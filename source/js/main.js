@@ -52,6 +52,7 @@ var App = Marionette.Application.extend({
 app = new App();
 app.on('start', (e) => {
 	Backbone.history.start();
+	checkVersion();
 	if (typeof window.DeviceMotionEvent !== 'undefined') {
 		window.ondevicemotion = function(e) {
 			var dataset = _.extend({},e.acceleration);
