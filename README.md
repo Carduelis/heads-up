@@ -1,8 +1,8 @@
-# Heads Up! game.
+# Heads Up! game
 This is a web app, no installation required. Just open it in your browser and play with friends!
 If you are interested in give me a star here :-)
 
-## [Demo](https://carduelis.github.io/heads-up/build/)
+# [Demo](https://carduelis.github.io/heads-up/build/)
 
 Features list
 - [x] Adapt for horizontal mode
@@ -30,6 +30,7 @@ Result-screen
 - [ ] Save game-result to team/player
 
 Fixes list
+- [ ] ## Rewrite config-getter!!!
 - [x] Fix results issue (results has not been shown after game over)
 - [x] Rewrite Timer-object
 - [x] Don't accept words while timer is paused

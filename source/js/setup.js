@@ -2,57 +2,18 @@
 var Data = {}, View = {};
 
 
-var dataset = [
-	{
-		title: 'Количество команд',
-		type: 'number',
-		name: 'teams',
-		disabledState: 'disabled',
-		value: 2
-	},{
-		title: 'Время на раунд',
-		type: 'number',
-		value: 1,
-		name: 'time',
-		disabledState: false,
-		measure: 'мин'
-	},{
-		title: 'Звук',
-		type: 'checkbox',
-		value: true,
-		disabledState: false,
-		name: 'sound',
-	},{
-		title: 'Категория',
-		disabledState: 'disabled',
-		name: 'category',
-		type: 'select',
-		value: 1,
-		options: [
-			{
-				id: 1,
-				name: 'Общие слова'
-			},{
-				id: 2,
-				name: 'Музыкальные группы и исполнители'
-			},{
-				id: 3,
-				name: 'Продукты питания'
-			},{
-				id: 4,
-				name: 'Гаджеты'
-			}
-		]
-	}
-];
-if (!localHas('settings')) {
-	localSave('settings',dataset);
-}
+
 EntryPoint = Marionette.Object.extend({
 	initialize: function() {
+		configGetter(this.onConfigGetted)
+	},
+	onConfigGetted: function (config) {
+		if (!localHas('settings')) {
+			localSave('settings',config.settings);
+		}
 		this.view = new View.SettingsWrapper();
 		app.rootView.getRegion('content').show(this.view);
-	},
+	}
 });
 
 Data.Setting = Backbone.Model.extend({

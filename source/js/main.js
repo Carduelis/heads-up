@@ -6,6 +6,7 @@ var RegionSetter = function() {
 	this.prefix = 'r-';
 	return this.builder();
 };
+
 RegionSetter.prototype.builder = function() {
 	regions = {};
 	for (var i in this.arguments) {
@@ -17,6 +18,23 @@ RegionSetter.prototype.builder = function() {
 	}
 	return regions
 };
+
+var configAntiCache = _.random(0,100000);
+var configGetter = function(callback) {
+	if (!window.config) {
+		$.getJSON('assets/config.json?'+configAntiCache)
+			.success(function(config){
+				window.config = config;
+				callback(config);
+			})
+			.fail(function (json) {
+				alert('Can not reach configuration-file');
+			})
+	} else {
+		callback(window.config);
+	}
+};
+
 var AcceleratorData = Backbone.Model.extend({
 	defaults: function() {
 		return {
@@ -52,7 +70,7 @@ var App = Marionette.Application.extend({
 app = new App();
 app.on('start', (e) => {
 	Backbone.history.start();
-	checkVersion();
+	configGetter(checkVersion);
 	if (typeof window.DeviceMotionEvent !== 'undefined') {
 		window.ondevicemotion = function(e) {
 			var dataset = _.extend({},e.acceleration);
